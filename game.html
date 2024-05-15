@@ -13,7 +13,7 @@
     <!-- Pause Menu button -->
     <button id="pause-button">Pause</button>
 
-    
+
     <!-- Inventory button -->
     <button id="inventory-button">Inventory</button>
 
@@ -42,14 +42,54 @@
 
     <!-- Movement buttons -->
     <div id="movement-buttons">
-        <button class="movement-button" id="move-button">Move</button>
+        <button class="movement-button" id="move-button" onclick="moveForward()">Move</button>
     </div>
 
     <!-- Movement options -->
     <div id="movement-options">
-        <button id="forward-button">Move Forward</button>
+        <!-- ------------------------ -->
+        <!-- ASCII Trees here -->
+        <!-- ------------------------ -->
+        <button id="forward-button" onclick="animateForward()">Move Forward</button>
         <button id="turn-left-button">Turn Left</button>
         <button id="turn-right-button">Turn Right</button>
     </div>
+
+    <script>
+        var isFirstMove = true;
+
+        function animateEnteringForest() {
+            var forwardButton = document.getElementById("forward-button");
+            forwardButton.innerHTML = "Entering Forest...";
+            setTimeout(function() {
+                forwardButton.innerHTML = "Move Forward";
+                generateTrees();
+            }, 5000);
+        }
+
+        function animateForward() {
+            if (isFirstMove) {
+                animateEnteringForest();
+                isFirstMove = false;
+            } else {
+                var forwardButton = document.getElementById("forward-button");
+                forwardButton.innerHTML = "Moving forward...";
+                setTimeout(function() {
+                    forwardButton.innerHTML = "Move Forward";
+                    generateTrees();
+                }, 5000);
+            }
+        }
+
+        function generateTrees() {
+            // Generate ASCII trees in the designated box
+            // Your code for generating trees goes here
+        }
+
+        function moveForward() {
+            // Code for moving forward in the game
+            // This function is called when the "Move" button is clicked
+        }
+    </script>
 </body>
 </html>
