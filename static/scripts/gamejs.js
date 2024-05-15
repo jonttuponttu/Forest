@@ -13,26 +13,29 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const actionMessageBox = document.getElementById('action-message-box');
 
     // Simulate loading progress and random messages
-    let progress = 0;
+    let startTime = Date.now();
+    const duration = 5000; // Total duration of the loading animation in milliseconds
     const messages = [
         'Building Terrain 1-100%',
         'Generating Rocks 1-100%',
         'Loading Assets 1-100%'
     ];
-
+    
     function getRandomMessage() {
         return messages[Math.floor(Math.random() * messages.length)];
     }
-
+    
     const loadingInterval = setInterval(() => {
-        if (progress < 100) {
-            progress += 1;
-            loadingProgress.style.width = progress + '%';
-
-            if (progress % 3 === 0) {
-                loadingMessage.textContent = getRandomMessage();
-            }
-        } else {
+        const elapsed = Date.now() - startTime;
+        const progress = Math.min(100, (elapsed / duration) * 100); // Calculate progress based on time elapsed
+    
+        loadingProgress.style.width = progress + '%';
+    
+        if (progress % 3 === 0) {
+            loadingMessage.textContent = getRandomMessage();
+        }
+    
+        if (progress >= 100) {
             clearInterval(loadingInterval);
             document.getElementById('loading').style.display = 'none';
             gameContainer.style.display = 'block';
