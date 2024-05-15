@@ -4,6 +4,8 @@ window.addEventListener('DOMContentLoaded', () => {
     const cheated = urlParams.get('cheated');
 
     if (cheated) {
-        alert('Loadingbar Skipped!\nCheater!');
+        setTimeout(() => {
+            alert('Loadingbar Skipped!\nCheater!');
+        }, 1000); // Delay of 1 second
     }
 });
