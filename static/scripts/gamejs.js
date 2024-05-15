@@ -42,18 +42,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
             // If progress reaches 100%, move to the next message
             currentMessageIndex++;
     
-            // If all messages have been displayed, stop the loading animation
+            // If all messages have been displayed, reset the currentMessageIndex to 0
             if (currentMessageIndex >= messages.length) {
-                clearInterval(loadingInterval);
-                document.getElementById('loading').style.display = 'none';
-                gameContainer.style.display = 'block';
-            } else {
-                // Reset start time for the next message
-                startTime = Date.now();
-                progress = 0;
+                currentMessageIndex = 0;
             }
+    
+            // Reset start time for the next message
+            startTime = Date.now();
+            progress = 0;
         }
     }, 100);
+
 
 
     // Show inventory modal
