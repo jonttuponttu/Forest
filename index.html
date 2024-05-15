@@ -43,7 +43,7 @@
     </style>
 </head>
 <body>
-    <button id="play-button">Play</button>
+    <button id="play-button" onclick="location.href='game.index';">Play</button>
     <div id="forest-animation">[Forest]</div>
     <div id="trees-container">
     </div>
@@ -114,18 +114,19 @@
                 if (forestText[i] === '[' || forestText[i] === ']') {
                     animatedText += forestText[i];
                 } else {
-                    // Delete old letters one by one
-                    setTimeout(() => {
-                        animatedText = animatedText.substring(0, animatedText.length - 1);
-                        forestAnimation.textContent = animatedText;
-                        // Start adding new letters after deleting all old letters
-                        if (animatedText === '[') {
-                            addingLetters = true;
-                        }
-                    }, deleteTimeout);
-                    deleteTimeout += 500;
-
-                    // Add new letters one by one after deleting old letters
+                    // Delete old letters one by one only if inside the brackets
+                    if (addingLetters) {
+                        setTimeout(() => {
+                            animatedText = animatedText.substring(0, animatedText.length - 1);
+                            forestAnimation.textContent = animatedText;
+                        }, deleteTimeout);
+                        deleteTimeout += 500;
+                    }
+                    // Start adding new letters after deleting all old letters inside brackets
+                    if (animatedText === '[') {
+                        addingLetters = true;
+                    }
+                    // Add new letters one by one after deleting old letters inside brackets
                     if (addingLetters) {
                         setTimeout(() => {
                             animatedText += String.fromCharCode(65 + Math.floor(Math.random() * 26));
