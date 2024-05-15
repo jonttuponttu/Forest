@@ -46,7 +46,7 @@
     <div id="forest-animation">[Forest]</div>
     <button id="play-button">Play</button>
     <div id="trees-container">
-        
+
     </div>
 
     <script>
@@ -108,25 +108,36 @@
             const forestAnimation = document.getElementById("forest-animation");
             const forestText = "[Forest]";
             let animatedText = "";
+            let deleteTimeout = 0;
             for (let i = 0; i < forestText.length; i++) {
-                const char = forestText[i];
-                if (char === '[' || char === ']') {
-                    animatedText += char;
+                if (forestText[i] === '[' || forestText[i] === ']') {
+                    animatedText += forestText[i];
                 } else {
-                    // Replace letters with random characters
-                    animatedText += String.fromCharCode(65 + Math.floor(Math.random() * 26)); // Random capital letter
+                    // Delete old letters one by one
+                    setTimeout(() => {
+                        animatedText = animatedText.substring(0, animatedText.length - 1);
+                        forestAnimation.textContent = animatedText;
+                    }, deleteTimeout);
+                    deleteTimeout += 500;
+
+                    // Type new letters one by one
+                    setTimeout(() => {
+                        animatedText += String.fromCharCode(65 + Math.floor(Math.random() * 26));
+                        forestAnimation.textContent = animatedText;
+                    }, deleteTimeout);
+                    deleteTimeout += 500;
                 }
             }
-            forestAnimation.textContent = animatedText;
         }
 
         // Call the generateTrees function immediately and every 3 seconds
         setInterval(generateTrees, 3000);
-        
+
         // Call the updateForestAnimation function every 5 seconds
         setInterval(updateForestAnimation, 5000);
 
         // Load trees initially
+        window.onload = generateTrees;// Load trees initially
         window.onload = generateTrees;
     </script>
 
