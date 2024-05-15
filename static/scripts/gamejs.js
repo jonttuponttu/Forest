@@ -70,4 +70,45 @@ document.addEventListener('DOMContentLoaded', (event) => {
             randomEncounter();
         }, 5000);
     }
+
+    // Save and load buttons
+    const saveButton = document.getElementById('save-button');
+    const loadButton = document.getElementById('load-button');
+    
+    // Save game state
+    saveButton.addEventListener('click', () => {
+        const gameState = {
+            cheats: localStorage.getItem('cheats') ? 1 : 0,
+            // other player statistics and progress and inventory and level and xp and location and everything.
+        };
+    
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(gameState));
+        const downloadAnchorNode = document.createElement('a');
+        downloadAnchorNode.setAttribute("href",     dataStr);
+        downloadAnchorNode.setAttribute("download", "forest-savegame.json");
+        document.body.appendChild(downloadAnchorNode); // required for firefox
+        downloadAnchorNode.click();
+        downloadAnchorNode.remove();
+    });
+    
+    // Load game state
+    loadButton.addEventListener('click', () => {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'application/json';
+    
+        input.onchange = (event) => {
+            const file = event.target.files[0];
+    
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const gameState = JSON.parse(event.target.result);
+                // Load the game state
+                // ...
+            };
+            reader.readAsText(file);
+        };
+    
+        input.click();
+    });
 });
