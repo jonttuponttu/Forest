@@ -1,10 +1,18 @@
 document.getElementById("play-button").addEventListener("click", function() {
-    // Set cheats to 0
-    
-    if(localStorage.getItem('cheats') === '1') {
-        localStorage.setItem('cheats', '0');
-    };
-    localStorage.setItem('cheats', '0');
+    fetch('assets/data/defaultValues.json')
+        .then(response => response.json())
+        .then(data => {
+            // Loop over all items in the data
+            for (const key in data) {
+                if (data.hasOwnProperty(key)) {
+                    const value = data[key];
 
-    window.location.href = "loadingbar.html";
+                    // Add the item to local storage
+                    localStorage.setItem(key, value);
+                }
+            }
+
+            // Redirect to loadingbar.html
+            window.location.href = "loadingbar.html";
+        });
 });
