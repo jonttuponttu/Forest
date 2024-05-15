@@ -15,9 +15,17 @@
             background-color: #f0f0f0;
         }
 
-        #priest {
+        .art {
             font-family: monospace;
+            margin-bottom: 20px;
+        }
+
+        #priest {
             font-size: 24px;
+        }
+
+        #bible, #cross {
+            font-size: 18px;
         }
 
         #leave-button {
@@ -30,10 +38,21 @@
             cursor: pointer;
             color: #fff;
         }
+
+        .option-button {
+            margin: 0 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: #fff;
+        }
     </style>
 </head>
 <body>
-    <div id="priest">
+    <div id="priest" class="art">
         <pre>
   _______
  /       \
@@ -47,10 +66,54 @@
         </pre>
     </div>
 
+    <div id="bible" class="art">
+        <pre>
+    .----------------.
+   /     ______     \
+  |    /       \    |
+  |   /  BIBLE  \   |
+  |   |         |   |
+  |   |  +---+  |   |
+   \  |  |   |  |  /
+    '--+--+---+--'
+        </pre>
+    </div>
+
+    <div id="cross" class="art">
+        <pre>
+      .----.
+     /      \
+    /  CROSS \
+   |          |
+    \        /
+     '------'
+        </pre>
+    </div>
+
+    <p>The Priest offers you:</p>
+
+    <button class="option-button" onclick="accept('bible')">Accept Bible</button>
+    <button class="option-button" onclick="accept('cross')">Accept Cross</button>
+    <button class="option-button" onclick="decline()">Decline</button>
+
     <button id="leave-button" onclick="leave()">Leave</button>
 
     <script>
         function leave() {
+            window.location.href = "game.html";
+        }
+
+        function accept(item) {
+            if (item === 'bible') {
+                alert("You accepted the Bible.");
+            } else if (item === 'cross') {
+                alert("You accepted the Cross.");
+            }
+            window.location.href = "game.html";
+        }
+
+        function decline() {
+            alert("You declined the offer.");
             window.location.href = "game.html";
         }
     </script>
