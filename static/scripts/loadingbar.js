@@ -17,13 +17,6 @@ class LoadingBar {
         this.skipButton = skipButton;
         this.skipSequence = ['s', 'k', 'i', 'p'];
         this.skipIndex = 0;
-
-        // Set cheats to 0 by default
-        if (!localStorage.getItem('cheats')) {
-            localStorage.setItem('cheats', '0');
-        }
-        if (!localStorage.getItem('cheats', '1')) {
-            localStorage.setItem('cheats', '0');
     }
     
     getRandomDuration() {
