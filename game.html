@@ -12,6 +12,7 @@
             background-color: #000;
             color: #fff;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
@@ -33,7 +34,7 @@
             background-color: #fff;
             transition: width 0.3s ease;
         }
-        #loading-text {
+        #loading-text, #loading-message {
             margin-top: 10px;
         }
         #inventory-button {
@@ -116,6 +117,33 @@
             display: flex;
             gap: 10px;
         }
+        #game-container {
+            position: relative;
+            width: 100%;
+            height: 60%;
+            background-color: #222;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .road-segment {
+            width: 90%;
+            height: 50px;
+            background-color: #444;
+            margin: 5px 0;
+            position: relative;
+            display: flex;
+            justify-content: space-around;
+        }
+        .rock {
+            width: 10px;
+            height: 10px;
+            background-color: #888;
+            border-radius: 50%;
+            position: absolute;
+        }
     </style>
 </head>
 <body>
@@ -125,6 +153,7 @@
         <div id="loading-progress-container">
             <div id="loading-progress"></div>
         </div>
+        <div id="loading-message"></div>
     </div>
 
     <!-- Inventory button -->
@@ -149,7 +178,7 @@
 
     <!-- Game container (hidden initially) -->
     <div id="game-container" style="display: none;">
-        <!-- Game content will be displayed here -->
+        <!-- Road segments will be added here -->
     </div>
 
     <!-- Movement buttons -->
@@ -170,21 +199,39 @@
             const inventoryModal = document.getElementById('inventory-modal');
             const closeBtn = document.querySelector('.close');
             const moveButton = document.getElementById('move-button');
+            const forwardButton = document.getElementById('forward-button');
             const movementOptions = document.getElementById('movement-options');
             const loadingProgress = document.getElementById('loading-progress');
+            const loadingMessage = document.getElementById('loading-message');
+            const gameContainer = document.getElementById('game-container');
 
-            // Simulate loading progress
+            // Simulate loading progress and random messages
             let progress = 0;
+            const messages = [
+                'Building Terrain 1-100%',
+                'Generating Rocks 1-100%',
+                'Loading Assets 1-100%'
+            ];
+
+            function getRandomMessage() {
+                return messages[Math.floor(Math.random() * messages.length)];
+            }
+
             const loadingInterval = setInterval(() => {
                 if (progress < 100) {
-                    progress += 10;
+                    progress += 1;
                     loadingProgress.style.width = progress + '%';
+
+                    if (progress % 3 === 0) {
+                        loadingMessage.textContent = getRandomMessage();
+                    }
                 } else {
                     clearInterval(loadingInterval);
                     document.getElementById('loading').style.display = 'none';
-                    document.getElementById('game-container').style.display = 'block';
+                    gameContainer.style.display = 'block';
+                    generateInitialRoad();
                 }
-            }, 300);
+            }, 100);
 
             // Show inventory modal
             inventoryButton.addEventListener('click', () => {
@@ -207,7 +254,40 @@
                     movementOptions.style.display = 'none';
                 });
             });
+
+            // Generate initial road segments
+            function generateInitialRoad() {
+                for (let i = 0; i < 7; i++) {
+                    const roadSegment = createRoadSegment();
+                    gameContainer.appendChild(roadSegment);
+                }
+            }
+
+            // Create a road segment with random rocks
+            function createRoadSegment() {
+                const roadSegment = document.createElement('div');
+                roadSegment.classList.add('road-segment');
+
+                // Randomly generate rocks
+                for (let i = 0; i < 3; i++) {
+                    if (Math.random() < 0.5) {
+                        const rock = document.createElement('div');
+                        rock.classList.add('rock');
+                        rock.style.left = `${Math.random() * 80 + 10}%`;
+                        rock.style.top = `${Math.random() * 80 + 10}%`;
+                        roadSegment.appendChild(rock);
+                    }
+                }
+                return roadSegment;
+            }
+
+            // Move forward action
+            forwardButton.addEventListener('click', () => {
+                const firstSegment = gameContainer.firstElementChild;
+                gameContainer.removeChild(firstSegment);
+                const newSegment = createRoadSegment();
+                gameContainer.appendChild(newSegment);
+            });
         });
     </script>
 </body>
-</html>
