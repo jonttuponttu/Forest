@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holy Knight NPC</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .knight-image {
+            display: block;
+            margin: 0 auto;
+            width: 200px;
+            height: auto;
+        }
+        p {
+            color: #555;
+            text-align: justify;
+        }
+        .interaction {
+            margin-top: 20px;
+            text-align: center;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Holy Knight NPC</h1>
+    <pre>
+        /-^-\
+       /  _  \
+      /  (_)  \
+      |  + +  |
+      \   |   /
+       \  |  /
+        \ | /
+         \|/
+          |
+          |
+          |
+    </pre>
+    <p>Welcome, traveler. I am a holy knight, sworn to defend the innocent and uphold justice. How may I assist you today?</p>
+    <div class="interaction">
+        <button onclick="talk()">Talk</button>
+        <button onclick="continueMoving()">Continue moving</button>
+    </div>
+</div>
+
+<script>
+    function talk() {
+        alert("The holy knight shares tales of valor and righteousness.");
+    }
+
+    function continueMoving() {
+        window.location.href = 'game.html'; // Redirect to game.html
+    }
+</script>
+
+</body>
+</html>
