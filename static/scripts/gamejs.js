@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     // Simulate loading progress and random messages
     let startTime = Date.now();
     let currentMessageIndex = 0;
+    let progress = 0;
     const duration = 5000; // Total duration of each message display in milliseconds
     const messages = [
         'Building Terrain',
@@ -28,27 +29,29 @@ document.addEventListener('DOMContentLoaded', (event) => {
     
     const loadingInterval = setInterval(() => {
         const elapsed = Date.now() - startTime;
-        const progress = Math.min(100, (elapsed / duration) * 100); // Calculate progress based on time elapsed
-        const message = messages[currentMessageIndex];
+    
+        // Calculate progress based on time elapsed
+        progress = Math.min(100, (elapsed / duration) * 100);
     
         loadingProgress.style.width = progress + '%';
     
-        if (progress < 100) {
-            loadingMessage.textContent = `${message} ${Math.floor(progress)}%`;
-        } else {
-            // Switch to the next message when the progress reaches 100%
-            currentMessageIndex = (currentMessageIndex + 1) % messages.length;
-            startTime = Date.now(); // Reset start time for the next message
-        }
+        // Display the current message with the calculated progress
+        loadingMessage.textContent = `${messages[currentMessageIndex]} ${Math.floor(progress)}%`;
     
-        if (progress % 3 === 0) {
-            loadingMessage.textContent = getRandomMessage();
-        }
+        if (progress >= 100) {
+            // If progress reaches 100%, move to the next message
+            currentMessageIndex++;
     
-        if (currentMessageIndex === messages.length && progress >= 100) {
-            clearInterval(loadingInterval);
-            document.getElementById('loading').style.display = 'none';
-            gameContainer.style.display = 'block';
+            // If all messages have been displayed, stop the loading animation
+            if (currentMessageIndex >= messages.length) {
+                clearInterval(loadingInterval);
+                document.getElementById('loading').style.display = 'none';
+                gameContainer.style.display = 'block';
+            } else {
+                // Reset start time for the next message
+                startTime = Date.now();
+                progress = 0;
+            }
         }
     }, 100);
 
