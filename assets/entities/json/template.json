@@ -1,0 +1,10 @@
+{
+	[
+	"entity": "entity",
+	"health": "value",
+	"class": "class"
+	"damage": "value",
+	"equipped_items": "{item, item}",
+	"possible_loot": "{item = chance, item = chance}"
+	]
+}
