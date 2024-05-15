@@ -22,8 +22,10 @@ class LoadingBar {
         if (!localStorage.getItem('cheats')) {
             localStorage.setItem('cheats', '0');
         }
+        if (!localStorage.getItem('cheats', '1')) {
+            localStorage.setItem('cheats', '0');
     }
-
+    
     getRandomDuration() {
         return this.durations[Math.floor(Math.random() * this.durations.length)];
     }
