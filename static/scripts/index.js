@@ -7,8 +7,8 @@ document.getElementById("play-button").addEventListener("click", function() {
                 if (data.hasOwnProperty(key)) {
                     const value = data[key];
 
-                    // Add the item to local storage
-                    localStorage.setItem(key, value);
+                    // Convert the value to a string and add it to local storage
+                    localStorage.setItem(key, value.toString());
                 }
             }
 
