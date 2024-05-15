@@ -108,6 +108,8 @@
             const forestText = "[Forest]";
             let animatedText = "";
             let deleteTimeout = 0;
+            let addingLetters = false;
+
             for (let i = 0; i < forestText.length; i++) {
                 if (forestText[i] === '[' || forestText[i] === ']') {
                     animatedText += forestText[i];
@@ -116,28 +118,33 @@
                     setTimeout(() => {
                         animatedText = animatedText.substring(0, animatedText.length - 1);
                         forestAnimation.textContent = animatedText;
+                        // Start adding new letters after deleting all old letters
+                        if (animatedText === '[') {
+                            addingLetters = true;
+                        }
                     }, deleteTimeout);
                     deleteTimeout += 500;
 
-                    // Type new letters one by one
-                    setTimeout(() => {
-                        animatedText += String.fromCharCode(65 + Math.floor(Math.random() * 26));
-                        forestAnimation.textContent = animatedText;
-                    }, deleteTimeout);
-                    deleteTimeout += 500;
+                    // Add new letters one by one after deleting old letters
+                    if (addingLetters) {
+                        setTimeout(() => {
+                            animatedText += String.fromCharCode(65 + Math.floor(Math.random() * 26));
+                            forestAnimation.textContent = animatedText;
+                        }, deleteTimeout);
+                        deleteTimeout += 500;
+                    }
                 }
             }
+            
+            // Wait for a delay before restarting the animation
+            setTimeout(updateForestAnimation, 5000);
         }
 
         // Call the generateTrees function immediately and every 3 seconds
         setInterval(generateTrees, 3000);
 
-        // Call the updateForestAnimation function every 5 seconds
-        setInterval(updateForestAnimation, 5000);
-
-        // Load trees initially
-        window.onload = generateTrees;// Load trees initially
-        window.onload = generateTrees;
+        // Call the updateForestAnimation function initially
+        updateForestAnimation();
     </script>
 
     <script src="static/scripts/index.js"></script>
