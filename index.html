@@ -43,8 +43,8 @@
     </style>
 </head>
 <body>
-    <div id="forest-animation">[Forest]</div>
     <button id="play-button">Play</button>
+    <div id="forest-animation">[Forest]</div>
     <div id="trees-container">
     </div>
 
@@ -106,43 +106,39 @@
         function updateForestAnimation() {
             const forestAnimation = document.getElementById("forest-animation");
             const forestText = "[Forest]";
-            let animatedText = forestText.substring(0, 1); // Initialize with the opening bracket
+            let animatedText = "";
+            let deleteTimeout = 0;
             let addingLetters = false;
 
-            for (let i = 1; i < forestText.length - 1; i++) { // Exclude the opening and closing brackets
-                if (forestText[i] !== '[' && forestText[i] !== ']') {
-                    // Delete old letters one by one only if inside the brackets
-                    if (!addingLetters) {
-                        setTimeout(() => {
-                            animatedText = animatedText.substring(0, animatedText.length - 1);
-                            forestAnimation.textContent = animatedText;
-                        }, 2000 + (i - 1) * 1000);
-                    } else {
-                        // Start adding new letters after deleting all old letters inside brackets
-                        setTimeout(() => {
-                            animatedText += String.fromCharCode(65 + Math.floor(Math.random() * 26));
-                            forestAnimation.textContent = animatedText;
-                        }, 2000 + (i - 1) * 1000);
-                    }
+            for (let i = 0; i < forestText.length; i++) {
+                if (forestText[i] === '[' || forestText[i] === ']') {
+                    animatedText += forestText[i];
                 } else {
+                    // Delete old letters one by one only if inside the brackets
+                    if (addingLetters) {
+                        setTimeout(() => {
+                            animatedText = animatedText.substring(0, animatedText.length - 1) + forestText[i];
+                            forestAnimation.textContent = animatedText;
+                        }, deleteTimeout);
+                        deleteTimeout += 2000;
+                    }
                     // Start adding new letters after deleting all old letters inside brackets
-                    addingLetters = true;
+                    if (forestText[i] === '[') {
+                        addingLetters = true;
+                    }
                 }
             }
-
-            // Wait for a delay before restarting the animation
-            setTimeout(() => {
-                updateForestAnimation();
-            }, 8000);
         }
 
         // Call the generateTrees function immediately and every 3 seconds
         setInterval(generateTrees, 3000);
 
-        // Call the updateForestAnimation function initially
-        updateForestAnimation();
+        // Call the updateForestAnimation function initially and every 8 seconds
+        setInterval(updateForestAnimation, 8000);
+        updateForestAnimation(); // Initial call
+
     </script>
 
     <script src="static/scripts/index.js"></script>
 </body>
-</html> 
+</html>
