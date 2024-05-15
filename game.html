@@ -34,6 +34,31 @@
             display: none;
             z-index: 9998;
         }
+
+        .dot-animation {
+            animation: dot-blink 1s infinite alternate;
+        }
+
+        @keyframes dot-blink {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        #encounter-box {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border: 2px solid #000;
+            z-index: 9999;
+        }
     </style>
 </head>
 <body>
@@ -72,6 +97,13 @@
 
         <!-- Trees container -->
         <div id="trees-container"></div>
+
+        <!-- Encounter box -->
+        <div id="encounter-box">
+            <p>Approach Priest?</p>
+            <button onclick="approachPriest()">Yes</button>
+            <button onclick="ignorePriest()">No</button>
+        </div>
     </div>
 
     <!-- Movement buttons -->
@@ -85,8 +117,8 @@
         <!-- ASCII Trees here -->
         <!-- ------------------------ -->
         <button id="forward-button" onclick="animateForward()">Move Forward</button>
-        <button id="turn-left-button">Turn Left</button>
-        <button id="turn-right-button">Turn Right</button>
+        <button id="wind-button">Wind</button>
+        <button id="look-around-button">Look Around</button>
     </div>
 
     <script>
@@ -120,6 +152,7 @@
                 } else {
                     notificationBox.innerHTML = "Moving forward...";
                     notificationBox.style.display = "block";
+                    treesnotificationBox.style.display = "block";
                     treesContainer.style.display = "none";
                     setTimeout(function() {
                         notificationBox.style.display = "none";
@@ -129,10 +162,25 @@
                     }, 5000);
                 }
             }
+
+            // 20% chance of encountering a priest
+            if (Math.random() < 0.2) {
+                document.getElementById("encounter-box").style.display = "block";
+            }
         }
 
         function animateForward() {
             toggleTextAndTrees();
+            animateDots();
+        }
+
+        function animateDots() {
+            var dots = document.querySelectorAll(".dot-animation");
+            dots.forEach(function(dot, index) {
+                setTimeout(function() {
+                    dot.style.display = "inline";
+                }, index * 200);
+            });
         }
 
         function generateTrees() {
@@ -148,6 +196,15 @@
         function moveForward() {
             // Code for moving forward in the game
             // This function is called when the "Move" button is clicked
+        }
+
+        function approachPriest() {
+            // Redirect to priest.html
+            window.location.href = "priest.html";
+        }
+
+        function ignorePriest() {
+            document.getElementById("encounter-box").style.display = "none";
         }
     </script>
 </body>
