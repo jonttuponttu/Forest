@@ -23,10 +23,16 @@
             margin-top: 50px;
         }
 
+        #forest-animation {
+            font-family: monospace;
+            margin-top: 20px;
+            font-size: 24px;
+        }
+
         #trees-container {
             position: relative;
             width: 100%;
-            height: calc(100vh - 100px); /* Adjusted to account for button height and margin */
+            height: calc(100vh - 200px); /* Adjusted to account for button height, margin, and forest animation */
         }
 
         .tree {
@@ -37,8 +43,9 @@
     </style>
 </head>
 <body>
+    <div id="forest-animation">[Forest]</div>
     <div id="trees-container">
-        <button id="play-button">Play</button>
+        <button id="play-button" onclick="window.location.href='loadingbar.html'">Play</button>
     </div>
 
     <script>
@@ -83,9 +90,27 @@
             }
         }
 
+        // Function to update the forest animation
+        function updateForestAnimation() {
+            const forestAnimation = document.getElementById("forest-animation");
+            const forestText = "[Forest]";
+            let animatedText = "";
+            for (let i = 0; i < forestText.length; i++) {
+                const char = forestText[i];
+                if (char === '[' || char === ']') {
+                    animatedText += char;
+                } else {
+                    // Replace letters with random characters
+                    animatedText += String.fromCharCode(65 + Math.floor(Math.random() * 26)); // Random capital letter
+                }
+            }
+            forestAnimation.textContent = animatedText;
+        }
+
+        // Call the updateForestAnimation function every 5 seconds
+        setInterval(updateForestAnimation, 5000);
+
         window.onload = generateTrees;
     </script>
-
-    <script src="static/scripts/index.js"></script>
 </body>
 </html>
