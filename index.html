@@ -3,17 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Text-Based Horror Game</title>
-    <link rel="stylesheet" href="static/index.css">
+    <title>ASCII Trees</title>
+    <style>
+        #trees-container {
+            position: relative;
+        }
+
+        .tree {
+            font-family: monospace;
+            position: absolute;
+            margin: 10px;
+        }
+    </style>
 </head>
 <body>
-    <button id="play-button">Play
-        <div id="made-with-chatgpt">This game has been made with the help of AI and two dumbasses.</div>
-    </button>
+    <button id="play-button">Play</button>
+    <div id="trees-container"></div>
 
-    <script src="static/scripts/index.js"></script>
+    <script>
+        function generateRandomTree() {
+            const minHeight = 3;
+            const maxHeight = 6;
+            const height = Math.floor(Math.random() * (maxHeight - minHeight + 1)) + minHeight;
+            const trunkWidth = 2 * height - 1;
+
+            let tree = "";
+            for (let i = 1; i <= height; i++) {
+                const spaces = " ".repeat(height - i);
+                const stars = "*".repeat(2 * i - 1);
+                tree += spaces + stars + spaces + "<br>";
+            }
+
+            const trunkSpaces = " ".repeat(Math.floor((trunkWidth - 3) / 2));
+            const trunk = trunkSpaces + "***" + trunkSpaces + "<br>";
+
+            tree += trunk;
+
+            return tree;
+        }
+
+        function generateTrees() {
+            const container = document.getElementById("trees-container");
+            const button = document.getElementById("play-button");
+            const buttonRect = button.getBoundingClientRect();
+            container.innerHTML = "";
+
+            const numTrees = Math.floor(Math.random() * 5) + 1;
+            for (let i = 0; i < numTrees; i++) {
+                const tree = generateRandomTree();
+                const div = document.createElement("div");
+                div.className = "tree";
+                div.innerHTML = tree;
+                const left = buttonRect.left - 50 + Math.random() * 100;
+                const top = buttonRect.top - 50 + Math.random() * 100;
+                div.style.left = `${left}px`;
+                div.style.top = `${top}px`;
+                container.appendChild(div);
+            }
+        }
+
+        window.onload = generateTrees;
+    </script>
 </body>
 </html>
-
-
-
