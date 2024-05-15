@@ -1,0 +1,25 @@
+// Add this code to the appropriate section in gamejs.js
+
+// Function to handle encounters
+function handleEncounter(encounter) {
+    document.getElementById("action-message-box").textContent = encounter.text;
+    if (encounter.redirect) {
+        const decision = confirm(encounter.action);
+        if (decision) {
+            window.location.href = encounter.redirect;
+        } else {
+            document.getElementById("action-message-box").textContent = encounter.action;
+        }
+    } else {
+        document.getElementById("action-message-box").textContent = encounter.action;
+    }
+}
+
+// Function to handle movement
+function handleMovement() {
+    const encounter = getRandomEncounter();
+    handleEncounter(encounter);
+}
+
+// Add event listener to movement button
+document.getElementById("move-button").addEventListener("click", handleMovement);
