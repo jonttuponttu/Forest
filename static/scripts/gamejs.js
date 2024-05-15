@@ -9,9 +9,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const turnLeftButton = document.getElementById('turn-left-button');
     const turnRightButton = document.getElementById('turn-right-button');
     const movementOptions = document.getElementById('movement-options');
-    const loadingProgress = document.getElementById('loading-progress');
-    const loadingMessage = document.getElementById('loading-message');
-    const gameContainer = document.getElementById('game-container');
     const actionMessageBox = document.getElementById('action-message-box');
 
     // Show inventory modal
@@ -29,12 +26,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
         movementOptions.style.display = 'flex';
     });
 
-    // Hide movement options when one is selected and show loading animation
-    document.querySelectorAll('#movement-options button').forEach(button => {
-        button.addEventListener('click', () => {
-            movementOptions.style.display = 'none';
-            showLoadingAnimation(button.id);
-        });
+    // Add event listeners to movement buttons
+    forwardButton.addEventListener('click', () => {
+        showLoadingAnimation('forward-button');
+    });
+
+    turnLeftButton.addEventListener('click', () => {
+        showLoadingAnimation('turn-left-button');
+    });
+
+    turnRightButton.addEventListener('click', () => {
+        showLoadingAnimation('turn-right-button');
     });
 
     function showLoadingAnimation(action) {
