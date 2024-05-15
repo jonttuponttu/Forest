@@ -7,8 +7,14 @@ document.getElementById("play-button").addEventListener("click", function() {
                 if (data.hasOwnProperty(key)) {
                     const value = data[key];
 
-                    // Add the item to local storage
-                    localStorage.setItem(key, value);
+                    // Check if the value is an object
+                    if (typeof value === 'object' && value !== null) {
+                        // Convert the object to a JSON string and add it to local storage
+                        localStorage.setItem(key, JSON.stringify(value));
+                    } else {
+                        // Add the item to local storage
+                        localStorage.setItem(key, value);
+                    }
                 }
             }
 
