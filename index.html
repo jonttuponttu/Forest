@@ -22,15 +22,20 @@
             border-radius: 5px;
             cursor: pointer;
             color: #fff;
+            position: relative; /* Needed for absolute positioning */
         }
         #made-with-chatgpt {
             color: #fff;
             font-size: 14px;
             margin-top: 10px;
-            transition: color 0.3s ease; /* Smooth transition */
+            position: absolute;
+            top: 100%; /* Position it below the button */
+            left: 0; /* Align it to the left */
+            opacity: 0; /* Initially hide it */
+            transition: opacity 0.3s ease; /* Smooth transition */
         }
         #play-button:hover #made-with-chatgpt {
-            color: #00f; /* Change to blue when the play button is hovered */
+            opacity: 1; /* Show it when the play button is hovered */
         }
     </style>
 </head>
@@ -46,5 +51,6 @@
     </script>
 </body>
 </html>
+
 
 
