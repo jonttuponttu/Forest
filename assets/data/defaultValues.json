@@ -19,30 +19,30 @@
         "slot7": "0",
         "slot8": "0",
         "slot9": "0",
-        "slot10": "0",
+        "slot10": "0"
     },
     "hotbar": {
         "hotbar1": "0",
         "hotbar2": "0",
         "hotbar3": "0",
         "hotbar4": "0",
-        "hotbar5": "0",
+        "hotbar5": "0"
     },
     "armor": {
         "head": "0",
         "chest": "0",
         "legs": "0",
-        "feet": "0",
+        "feet": "0"
     },
     "spells": {
         "spell1": "0",
         "spell2": "0",
-        "spell3": "0",
+        "spell3": "0"
     },
     "skills": {
         "skill1": "0",
         "skill2": "0",
-        "skill3": "0",
+        "skill3": "0"
     },
     "skillpoints": "0",
     "attributePoints": "0",
