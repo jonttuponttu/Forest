@@ -1,5 +1,5 @@
 class LoadingBar {
-    constructor(loadingProgress, loadingMessage) {
+    constructor(loadingProgress, loadingMessage, skipButton) {
         this.startTime = Date.now();
         this.currentMessageIndex = 0;
         this.progress = 0;
@@ -14,6 +14,9 @@ class LoadingBar {
         this.durations = [3000, 7000, 5000, 1000, 10000, 500]; // durations in milliseconds
         this.loadingProgress = loadingProgress;
         this.loadingMessage = loadingMessage;
+        this.skipButton = skipButton;
+        this.skipSequence = ['s', 'k', 'i', 'p'];
+        this.skipIndex = 0;
     }
 
     getRandomDuration() {
@@ -49,6 +52,23 @@ class LoadingBar {
                 }
             }
         }, 100);
+
+        // Listen for keydown event
+        window.addEventListener('keydown', (event) => {
+            // Check if the correct key in the sequence was pressed
+            if (event.key.toLowerCase() === this.skipSequence[this.skipIndex]) {
+                this.skipIndex++;
+
+                // If the entire sequence has been typed, skip the loading scene
+                if (this.skipIndex === this.skipSequence.length) {
+                    clearInterval(loadingInterval);
+                    window.location.href = 'game.html';
+                    alert('Loadingbar Skipped!\nCheater!');
+                }
+            } else {
+                this.skipIndex = 0;
+            }
+        });
     }
 }
 
@@ -56,6 +76,7 @@ class LoadingBar {
 window.addEventListener('DOMContentLoaded', () => {
     const loadingProgress = document.querySelector('#loading-progress');
     const loadingMessage = document.querySelector('#loading-message');
-    const loadingBar = new LoadingBar(loadingProgress, loadingMessage);
+    const skipButton = document.querySelector('#skip-button'); // Add this line
+    const loadingBar = new LoadingBar(loadingProgress, loadingMessage, skipButton); // Modify this line
     loadingBar.start();
 });
