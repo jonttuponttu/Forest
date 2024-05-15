@@ -120,9 +120,7 @@
         }
 
         // Call the generateTrees function immediately and every 3 seconds
-        setInterval(function() {
-            generateTrees();
-        }, 3000);
+        setInterval(generateTrees, 3000);
         
         // Call the updateForestAnimation function every 5 seconds
         setInterval(updateForestAnimation, 5000);
