@@ -63,7 +63,7 @@ class LoadingBar {
                 if (this.skipIndex === this.skipSequence.length) {
                     clearInterval(loadingInterval);
                     localStorage.setItem('cheated', 'true'); // Store the cheat status in the local storage
-                    localStorage.setItem('cheats', '1');
+                    localStorage.setItem('global.cheats', '1');
                     window.location.href = 'game.html';
                 }
             } else {
