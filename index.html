@@ -23,10 +23,21 @@
             cursor: pointer;
             color: #fff;
         }
+        #made-with-chatgpt {
+            color: #fff;
+            font-size: 14px;
+            margin-top: 10px;
+            transition: color 0.3s ease; /* Smooth transition */
+        }
+        #play-button:hover #made-with-chatgpt {
+            color: #00f; /* Change to blue when the play button is hovered */
+        }
     </style>
 </head>
 <body>
-    <button id="play-button">Play</button>
+    <button id="play-button">Play
+        <div id="made-with-chatgpt">This game has been made with ChatGPT.</div>
+    </button>
 
     <script>
         document.getElementById("play-button").addEventListener("click", function() {
@@ -35,4 +46,5 @@
     </script>
 </body>
 </html>
+
 
