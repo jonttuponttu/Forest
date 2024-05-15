@@ -16,12 +16,17 @@ class LoadingBar {
         this.loadingMessage = loadingMessage;
     }
 
+    getRandomDuration() {
+        return this.durations[Math.floor(Math.random() * this.durations.length)];
+    }
+
     start() {
+        let currentDuration = this.getRandomDuration();
         const loadingInterval = setInterval(() => {
             const elapsed = Date.now() - this.startTime;
 
             // Calculate progress based on time elapsed
-            this.progress = Math.min(100, (elapsed / this.durations[this.currentMessageIndex]) * 100);
+            this.progress = Math.min(100, (elapsed / currentDuration) * 100);
 
             this.loadingProgress.style.width = this.progress + '%';
 
@@ -40,6 +45,7 @@ class LoadingBar {
                     // Reset start time for the next message
                     this.startTime = Date.now();
                     this.progress = 0;
+                    currentDuration = this.getRandomDuration();
                 }
             }
         }, 100);
