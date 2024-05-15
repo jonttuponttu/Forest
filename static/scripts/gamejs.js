@@ -16,12 +16,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
     let startTime = Date.now();
     let currentMessageIndex = 0;
     let progress = 0;
-    const duration = 5000; // Total duration of each message display in milliseconds
     const messages = [
         'Building Terrain',
         'Generating Rocks',
         'Loading Assets'
     ];
+    
+    // Define durations for each message
+    const durations = [3000, 7000, 5000]; // durations in milliseconds
     
     function getRandomMessage() {
         return messages[Math.floor(Math.random() * messages.length)];
@@ -31,7 +33,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const elapsed = Date.now() - startTime;
     
         // Calculate progress based on time elapsed
-        progress = Math.min(100, (elapsed / duration) * 100);
+        progress = Math.min(100, (elapsed / durations[currentMessageIndex]) * 100);
     
         loadingProgress.style.width = progress + '%';
     
@@ -52,8 +54,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
             progress = 0;
         }
     }, 100);
-
-
 
     // Show inventory modal
     inventoryButton.addEventListener('click', () => {
