@@ -41,7 +41,6 @@
             border-radius: 5px;
             background-color: #222;
             max-width: 300px;
-            display: none;
             z-index: 9998; /* Ensure inventory appears above loading screen */
         }
         #inventory h2 {
@@ -69,10 +68,13 @@
             color: #fff;
             cursor: pointer;
         }
+        .movement-button.active {
+            background-color: red;
+        }
         #movement-options {
             display: none;
             position: fixed;
-            bottom: 20px;
+            bottom: calc(100% + 10px);
             left: 50%;
             transform: translateX(-50%);
             background-color: #333;
@@ -99,7 +101,7 @@
 <body>
     <!-- Loading animation -->
     <div id="loading">
-        <div id="loading-text">Starting game 0%</div>
+        <div id="loading-text">Loading...</div>
     </div>
 
     <!-- Inventory container -->
@@ -177,12 +179,24 @@
                 document.getElementById('inventory').style.display = 'block';
             } else {
                 // Update the loading text with the current progress
-                document.getElementById('loading-text').textContent = `Starting game ${loadingProgress}%`;
+                document.getElementById('loading-text').textContent = `Loading... ${loadingProgress}%`;
+                // Add descriptive loading messages
+                if (loadingProgress === 25) {
+                    document.getElementById('loading-text').textContent = `Loading shaders... ${loadingProgress}%`;
+                } else if (loadingProgress === 50) {
+                    document.getElementById('loading-text').textContent = `Loading terrain... ${loadingProgress}%`;
+                } else if (loadingProgress === 75) {
+                    document.getElementById('loading-text').textContent = `Loading items functions... ${loadingProgress}%`;
+                } else if (loadingProgress === 100) {
+                    document.getElementById('loading-text').textContent = `Loading monster... ${loadingProgress}%`;
+                }
             }
-        }, 50); // Adjust the interval duration (in milliseconds) for smoother or faster animation
+        }, 100); // Adjust the interval duration (in milliseconds) for smoother or faster animation
 
         // Movement button event listener
         document.getElementById('movement-button').addEventListener('click', () => {
+            // Toggle the active state of the movement button
+            document.getElementById('movement-button').classList.toggle('active');
             // Display movement options when the button is clicked
             document.getElementById('movement-options').style.display = 'block';
         });
@@ -193,6 +207,8 @@
             console.log('Move forward');
             // Hide movement options after selecting an option
             document.getElementById('movement-options').style.display = 'none';
+            // Remove the active state from the movement button
+            document.getElementById('movement-button').classList.remove('active');
         });
 
         document.getElementById('turn-left-button').addEventListener('click', () => {
@@ -200,13 +216,17 @@
             console.log('Turn left');
             // Hide movement options after selecting an option
             document.getElementById('movement-options').style.display = 'none';
+            // Remove the active state from the movement button
+            document.getElementById('movement-button').classList.remove('active');
         });
 
         document.getElementById('turn-right-button').addEventListener('click', () => {
             // Implement movement logic for turning right
             console.log('Turn right');
             // Hide movement options after selecting an option
-            document.getElementById.getElementById('movement-options').style.display = 'none';
+            document.getElementById('movement-options').style.display = 'none';
+            // Remove the active state from the movement button
+            document.getElementById('movement-button').classList.remove('active');
         });
     </script>
 </body>
