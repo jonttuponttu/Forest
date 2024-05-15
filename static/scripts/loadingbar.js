@@ -46,3 +46,11 @@ export class LoadingBar {
         }, 100);
     }
 }
+
+// Create an instance of LoadingBar and start it when the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', () => {
+    const loadingProgress = document.getElementById('loading-progress');
+    const loadingMessage = document.getElementById('loading-message');
+    const loadingBar = new LoadingBar(loadingProgress, loadingMessage);
+    loadingBar.start();
+});
