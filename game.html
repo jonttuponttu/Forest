@@ -21,23 +21,11 @@
 
         #notification-box {
             position: absolute;
-            top: 50%;
+            top: 20%;
             left: 50%;
             transform: translate(-50%, -50%);
             display: none;
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 20px;
-            border: 2px solid #000;
             z-index: 9999;
-        }
-
-        #trees-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            display: none;
-            z-index: 9998;
         }
 
         .dot-animation {
@@ -53,32 +41,88 @@
             }
         }
 
-        #encounter-box {
+        #player {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: red;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            z-index: 9998;
+        }
+
+        #priest {
+            position: absolute;
+            background-color: blue;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            z-index: 9998;
+            display: none;
+        }
+
+        .tree {
+            position: absolute;
+            color: green;
+            z-index: 9997;
+        }
+
+        /* Inventory styles */
+        #inventory-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+
+        #inventory-modal {
             display: none;
             position: fixed;
-            top: 50%;
-            left:50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 20px;
-            border: 2px solid #000;
             z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+            padding-top: 60px;
+        }
+
+        #inventory-modal-content {
+            background-color: #222;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            color: white;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
 
-    <!-- Pause Menu button -->
-    <button id="pause-button">Pause</button>
-
-
     <!-- Inventory button -->
-    <button id="inventory-button">Inventory</button>
+    <button id="inventory-button" onclick="openInventory()">Inventory</button>
 
     <!-- Inventory modal -->
     <div id="inventory-modal" class="modal">
-        <div class="modal-content">
-            <span class="close">×</span>
+        <div id="inventory-modal-content">
+            <span class="close" onclick="closeInventory()">×</span>
             <h2>Inventory</h2>
             <div id="items">
                 <!-- Inventory items will be displayed here -->
@@ -94,14 +138,30 @@
 
     <!-- Game container -->
     <div id="game-container">
-        <!-- Message box for actions -->
-        <div class="message-box" id="action-message-box"></div>
+        <!-- Text box for actions -->
+        <div class="message-box" id="action-message-box">
+            <p>Loading...</p>
+            <div class="dot-animation">.</div>
+            <div class="dot-animation">.</div>
+            <div class="dot-animation">.</div>
+        </div>
 
         <!-- Notification box -->
         <div id="notification-box"></div>
 
+        <!-- Player position indicator -->
+        <div id="player"></div>
+
+        <!-- Priest position indicator -->
+        <div id="priest"></div>
+
         <!-- Trees container -->
-        <div id="trees-container"></div>
+        <div id="trees-container">
+            <div class="tree" style="top: 30%; left: 40%;">*</div>
+            <div class="tree" style="top: 40%; left: 30%;">*</div>
+            <div class="tree" style="top:50%; left: 50%;">*</div>
+            <div class="tree" style="top: 60%; left: 40%;">*</div>
+        </div>
 
         <!-- Encounter box -->
         <div id="encounter-box">
@@ -111,23 +171,25 @@
         </div>
     </div>
 
+    <!-- Pause Menu button -->
+    <button id="pause-button">Pause</button>
+
     <!-- Movement buttons -->
     <div id="movement-buttons">
-        <button class="movement-button" id="move-button" onclick="toggleTextAndTrees()">Move</button>
+        <button class="movement-button" id="move-button" onclick="moveForward()">Move</button>
+        <button class="movement-button" id="wind-button" onclick="useWind()">Wind</button>
     </div>
 
     <!-- Movement options -->
     <div id="movement-options">
-        <!-- ------------------------ -->
-        <!-- ASCII Trees here -->
-        <!-- ------------------------ -->
+        <!-- Movement buttons -->
         <button id="forward-button" onclick="animateForward()">Move Forward</button>
-        <button id="wind-button">Wind</button>
-        <button id="look-around-button">Look Around</button>
+        <button id="look-around-button" onclick="lookAround()">Look Around</button>
     </div>
 
     <script>
         var isFirstMove = true;
+        var movesLeft = 0;
 
         function toggleTextAndTrees() {
             var notificationBox = document.getElementById("notification-box");
@@ -140,7 +202,7 @@
                 setTimeout(function() {
                     notificationBox.style.display = "none";
                     treesContainer.style.display = "block";
-                    generateTrees();
+                    document.getElementById("player").style.display = "block";
                 }, 5000);
                 isFirstMove = false;
             } else {
@@ -148,28 +210,27 @@
                     notificationBox.innerHTML = "Moving forward in Forest...";
                     notificationBox.style.display = "block";
                     treesContainer.style.display = "none";
+                    document.getElementById("player").style.display = "none";
+                    document.getElementById("priest").style.display = "none";
                     setTimeout(function() {
                         notificationBox.style.display = "none";
                         forwardButton.innerHTML = "Move Forward";
                         treesContainer.style.display = "block";
-                        generateTrees();
+                        document.getElementById("player").style.display = "block";
                     }, 5000);
                 } else {
                     notificationBox.innerHTML = "Moving forward...";
                     notificationBox.style.display = "block";
                     treesContainer.style.display = "none";
+                    document.getElementById("player").style.display = "none";
+                    document.getElementById("priest").style.display = "none";
                     setTimeout(function() {
                         notificationBox.style.display = "none";
                         forwardButton.innerHTML = "Move Forward";
                         treesContainer.style.display = "block";
-                        generateTrees();
+                        document.getElementById("player").style.display = "block";
                     }, 5000);
                 }
-            }
-
-            // 20% chance of encountering a priest
-            if (Math.random() < 0.2) {
-                document.getElementById("encounter-box").style.display = "block";
             }
         }
 
@@ -187,24 +248,13 @@
             });
         }
 
-        function generateTrees() {
-            var treesContainer = document.getElementById("trees-container");
-            treesContainer.innerHTML = ""; // Clear previous trees
-            var trees = ""; // Simulated trees
-            for (var i = 0; i < 5; i++) {
-                trees += "Tree" + (i + 1) + "<br>";
-            }
-            treesContainer.innerHTML = trees;
-        }
-
-        function clearTrees() {
-            var treesContainer = document.getElementById("trees-container");
-            treesContainer.innerHTML = "";
-        }
-
         function moveForward() {
-            // Code for moving forward in the game
-            // This function is called when the "Move" button is clicked
+            if (movesLeft > 0) {
+                movesLeft--;
+                if (movesLeft === 0) {
+                    document.getElementById("priest").style.display = "block";
+                }
+            }
         }
 
         function approachPriest() {
@@ -215,6 +265,55 @@
         function ignorePriest() {
             document.getElementById("encounter-box").style.display = "none";
         }
+
+        function lookAround() {
+            var lookAroundButton = document.getElementById("look-around-button");
+            if (movesLeft === 1) {
+                lookAroundButton.innerHTML = "Priest is close.";
+            } else {
+                lookAroundButton.innerHTML = "Darkness.";
+            }
+        }
+
+        function openInventory() {
+            document.getElementById("inventory-modal").style.display = "block";
+        }
+
+        function closeInventory() {
+            document.getElementById("inventory-modal").style.display = "none";
+        }
+
+        function useWind() {
+            var windButton = document.getElementById("wind-button");
+            var rolledNumber = Math.floor(Math.random() * 7) + 1;
+            windButton.disabled = true;
+            windButton.innerHTML = "Wind (Used)";
+            movePlayer(rolledNumber);
+            if (rolledNumber < movesLeft) {
+                var distance = movesLeft - rolledNumber;
+                movesLeft = rolledNumber;
+                document.getElementById("priest").style.display = "block";
+                movePriest(distance);
+            } else {
+                windButton.disabled = false;
+                windButton.innerHTML = "Wind";
+            }
+        }
+
+        function movePlayer(steps) {
+            // Implement player movement logic here
+            console.log("Player moved " + steps + " steps.");
+        }
+
+        function movePriest(steps) {
+            // Implement priest movement logic here
+            console.log("Priest moved " + steps + " steps closer.");
+        }
+
+        // Roll a random number between 1 and 5 when the page loads
+        window.onload = function() {
+            movesLeft = Math.floor(Math.random() * 5) + 1;
+        };
     </script>
 </body>
 </html>
