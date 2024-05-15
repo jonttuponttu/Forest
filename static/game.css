@@ -1,102 +1,149 @@
 body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #000;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100vh;
+    font-family: Arial, sans-serif;
+    background-color: #000;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
 }
 
 #loading {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
+    text-align: center;
 }
 
-#loading-text {
-  font-size: 24px;
-  color: #fff;
+#loading-progress-container {
+    width: 100px;
+    height: 10px;
+    background-color: #444;
+    margin: 10px auto;
+    position: relative;
 }
 
-#inventory {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  padding: 10px;
-  border: 2px solid #ccc;
-  border-radius: 5px;
-  background-color: #222;
-  max-width: 300px;
-  z-index: 9998; /* Ensure inventory appears above loading screen */
+#loading-progress {
+    height: 100%;
+    width: 0;
+    background-color: #fff;
+    transition: width 0.3s ease;
 }
 
-#inventory h2 {
-  margin-top: 0;
-  margin-bottom: 10px;
-  font-size: 20px;
+#loading-text, #loading-message {
+    margin-top: 10px;
 }
 
-.item {
-  margin-bottom: 5px;
-  font-size: 16px;
-  cursor: pointer;
+#inventory-button {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    padding: 10px 20px;
+    background-color: #ff0000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#inventory-modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    color: #000;
+}
+
+.modal-content {
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+#items {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.inventory-item {
+    background-color: #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+#inventory-action-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 #movement-buttons {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
+    position: fixed;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
 }
 
-.movement-button {
-  padding: 10px 20px;
-  margin: 0 10px;
-  font-size: 18px;
-  background-color: #333;
-  border: 2px solid #fff;
-  border-radius: 5px;
-  color: #fff;
-  cursor: pointer;
-}
-
-.movement-button.active {
-  background-color: red;
+.movement-button,
+#forward-button,
+#turn-left-button,
+#turn-right-button {
+    padding: 10px 20px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 #movement-options {
-  display: none;
-  position: fixed;
-  bottom: calc(100% + 10px);
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #333;
-  border: 2px solid #fff;
-  border-radius: 5px;
-  z-index: 9999;
+    display: none;
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
 }
 
-#movement-options button {
-  display: block;
-  width: 100%;
-  padding: 10px 0;
-  font-size: 16px;
-  background-color: transparent;
-  border: none;
-  border-bottom: 1px solid #fff;
-  color: #fff;
-  cursor: pointer;
+#game-container {
+    position: relative;
+    width: 100%;
+    height: 60%;
+    background-color: #222;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-#movement-options button:last-child {
-  border: none;
+.message-box {
+    width: 200px;
+    height: 100px;
+    border: 1px solid #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
 }
