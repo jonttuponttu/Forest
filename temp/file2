@@ -1,0 +1,37 @@
+// Array of encounter options
+const encounters = [
+    { 
+        text: "There's a mysterious figure in dark clothing.", 
+        action: "Do you want to approach it or continue moving?", 
+        redirect: "priest.html" 
+    },
+    { 
+        text: "A mysterious figure in shiny armor stands before you.", 
+        action: "Do you want to approach it or continue moving?", 
+        redirect: "holyknight.html" 
+    },
+    { 
+        text: "A house is visible in the distance.", 
+        action: "Advance to the house?", 
+        redirect: "house_outside.html" 
+    },
+    { 
+        text: "Ignoring the figure...", 
+        action: "1.2.3 1.2.3 1.2.3", 
+        redirect: null 
+    }
+];
+
+// Function to randomly select an encounter
+function getRandomEncounter() {
+    const randomNum = Math.random();
+    if (randomNum <= 0.2) {
+        return encounters[0]; // Priest encounter
+    } else if (randomNum <= 0.4) {
+        return encounters[1]; // Holy Knight encounter
+    } else if (randomNum <= 0.6) {
+        return encounters[2]; // House encounter
+    } else {
+        return encounters[3]; // Ignoring encounter
+    }
+}
