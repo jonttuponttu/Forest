@@ -1,4 +1,4 @@
-export class LoadingBar {
+class LoadingBar {
     constructor(loadingProgress, loadingMessage) {
         this.startTime = Date.now();
         this.currentMessageIndex = 0;
@@ -11,10 +11,6 @@ export class LoadingBar {
         this.durations = [3000, 7000, 5000]; // durations in milliseconds
         this.loadingProgress = loadingProgress;
         this.loadingMessage = loadingMessage;
-    }
-
-    getRandomMessage() {
-        return this.messages[Math.floor(Math.random() * this.messages.length)];
     }
 
     start() {
@@ -48,9 +44,9 @@ export class LoadingBar {
 }
 
 // Create an instance of LoadingBar and start it when the DOM is fully loaded
-document.addEventListener('DOMContentLoaded', () => {
-    const loadingProgress = document.getElementById('loading-progress');
-    const loadingMessage = document.getElementById('loading-message');
+window.addEventListener('DOMContentLoaded', () => {
+    const loadingProgress = document.querySelector('#loading-progress');
+    const loadingMessage = document.querySelector('#loading-message');
     const loadingBar = new LoadingBar(loadingProgress, loadingMessage);
     loadingBar.start();
 });
