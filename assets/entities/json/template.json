@@ -1,11 +1,9 @@
 {
-	[
-	"entity": "entity",
-	"health": "value",
-	"class": "class"
-	"damage": "value",
-	"equipped_items": "{item, item}",
-	"possible_loot": "{item = chance, item = chance}"
-	"level": "level"
-	]
+    "entity": "entity",
+    "health": "value",
+    "class": "class",
+    "damage": "value",
+    "equipped_items": ["item1", "item2"],
+    "possible_loot": {"item1": "chance1", "item2": "chance2"},
+    "level": "level"
 }
