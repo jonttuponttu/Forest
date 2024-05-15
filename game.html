@@ -7,6 +7,34 @@
     <link rel="stylesheet" href="static/game.css">
     <script src="static/scripts/gamejs.js"></script>
     <script src="static/scripts/cheater.js"></script>
+    <style>
+        #game-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+        }
+
+        #notification-box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border: 2px solid #000;
+            z-index: 9999;
+        }
+
+        #trees-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+            z-index: 9998;
+        }
+    </style>
 </head>
 <body>
 
@@ -34,15 +62,21 @@
         </div>
     </div>
 
-    <!-- Game container (hidden initially) -->
-    <div id="game-container" style="display: none;">
+    <!-- Game container -->
+    <div id="game-container">
         <!-- Message box for actions -->
         <div class="message-box" id="action-message-box"></div>
+
+        <!-- Notification box -->
+        <div id="notification-box"></div>
+
+        <!-- Trees container -->
+        <div id="trees-container"></div>
     </div>
 
     <!-- Movement buttons -->
     <div id="movement-buttons">
-        <button class="movement-button" id="move-button" onclick="moveForward()">Move</button>
+        <button class="movement-button" id="move-button" onclick="toggleTextAndTrees()">Move</button>
     </div>
 
     <!-- Movement options -->
@@ -58,32 +92,57 @@
     <script>
         var isFirstMove = true;
 
-        function animateEnteringForest() {
+        function toggleTextAndTrees() {
+            var notificationBox = document.getElementById("notification-box");
+            var treesContainer = document.getElementById("trees-container");
             var forwardButton = document.getElementById("forward-button");
-            forwardButton.innerHTML = "Entering Forest...";
-            setTimeout(function() {
-                forwardButton.innerHTML = "Move Forward";
-                generateTrees();
-            }, 5000);
+
+            if (isFirstMove) {
+                notificationBox.innerHTML = "Entering Forest...";
+                notificationBox.style.display = "block";
+                setTimeout(function() {
+                    notificationBox.style.display = "none";
+                    treesContainer.style.display = "block";
+                    generateTrees();
+                }, 5000);
+                isFirstMove = false;
+            } else {
+                if (forwardButton.innerHTML === "Move Forward") {
+                    notificationBox.innerHTML = "Leaving Forest...";
+                    notificationBox.style.display = "block";
+                    treesContainer.style.display = "none";
+                    setTimeout(function() {
+                        notificationBox.style.display = "none";
+                        forwardButton.innerHTML = "Move Forward";
+                        treesContainer.style.display = "block";
+                        generateTrees();
+                    }, 5000);
+                } else {
+                    notificationBox.innerHTML = "Moving forward...";
+                    notificationBox.style.display = "block";
+                    treesContainer.style.display = "none";
+                    setTimeout(function() {
+                        notificationBox.style.display = "none";
+                        forwardButton.innerHTML = "Move Forward";
+                        treesContainer.style.display = "block";
+                        generateTrees();
+                    }, 5000);
+                }
+            }
         }
 
         function animateForward() {
-            if (isFirstMove) {
-                animateEnteringForest();
-                isFirstMove = false;
-            } else {
-                var forwardButton = document.getElementById("forward-button");
-                forwardButton.innerHTML = "Moving forward...";
-                setTimeout(function() {
-                    forwardButton.innerHTML = "Move Forward";
-                    generateTrees();
-                }, 5000);
-            }
+            toggleTextAndTrees();
         }
 
         function generateTrees() {
             // Generate ASCII trees in the designated box
             // Your code for generating trees goes here
+        }
+
+        function clearTrees() {
+            // Clear trees from the designated box
+            // Your code for clearing trees goes here
         }
 
         function moveForward() {
