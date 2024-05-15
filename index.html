@@ -40,13 +40,29 @@
             position: absolute;
             margin: 10px;
         }
+
+        #jokes-container {
+            margin-top: 20px;
+        }
+
+        .word {
+            color: yellow;
+        }
+
+        .light-joke {
+            color: cyan;
+        }
+
+        .dark-joke {
+            color: red;
+        }
     </style>
 </head>
 <body>
-    <button id="play-button">Play</button>
     <div id="forest-animation">[Forest]</div>
-    <div id="trees-container">
-    </div>
+    <div id="jokes-container"></div>
+    <button id="play-button">Play</button>
+    <div id="trees-container"></div>
 
     <script>
         function generateRandomTree() {
@@ -103,26 +119,24 @@
         }
 
         function getRandomWordOrJoke() {
-            const words = ["sun", "moon", "stars", "sky", "forest", "river", "bird", "cloud", "mountain", "ocean"];
-            const lightJokes = ["Why did the scarecrow win an award? Because he was outstanding in his field.", "Why don't skeletons fight each other? They don't have the guts.", "Did you hear about the cheese factory that exploded? There was nothing left but de-brie."];
-            const darkJokes = ["Why was the math book sad? Because it had too many problems.", "Why don't scientists trust atoms? Because they make up everything.", "I told my wife she was drawing her eyebrows too high. She looked surprised."];
-            const randomNum = Math.random();
-            if (randomNum < 0.3) {
-                return words[Math.floor(Math.random() * words.length)];
-            } else if (randomNum < 0.6) {
-                return lightJokes[Math.floor(Math.random() * lightJokes.length)];
-            } else {
-                return darkJokes[Math.floor(Math.random() * darkJokes.length)];
-            }
+            const options = [
+                { type: "word", text: "Sunshine" },
+                { type: "word", text: "Rainbow" },
+                { type: "light-joke", text: "Why don't skeletons fight each other? They don't have the guts." },
+                { type: "light-joke", text: "Why did the scarecrow win an award? Because he was outstanding in his field." },
+                { type: "dark-joke", text: "Why was the math book sad? Because it had too many problems." },
+                { type: "dark-joke", text: "Why did the tomato turn red? Because it saw the salad dressing!" }
+            ];
+
+            const randomIndex = Math.floor(Math.random() * options.length);
+            return options[randomIndex];
         }
 
-        // Function to update the forest animation
         function updateForestAnimation() {
             const forestAnimation = document.getElementById("forest-animation");
-            const forestText = "[Forestfunction updateForestAnimation() {
-            const forestAnimation = document.getElementById("forest-animation");
+            const jokesContainer = document.getElementById("jokes-container");
             const forestText = "[Forest]";
-            let animatedText = "";
+            let animatedText =let animatedText = "";
             let deleteTimeout = 0;
             let addingLetters = false;
 
@@ -145,7 +159,8 @@
                     // Add new letters one by one after deleting old letters inside brackets
                     if (addingLetters) {
                         setTimeout(() => {
-                            animatedText += getRandomWordOrJoke();
+                            const newChar = getRandomLetter();
+                            animatedText += newChar;
                             forestAnimation.textContent = animatedText;
                         }, deleteTimeout);
                         deleteTimeout += 2000;
@@ -153,17 +168,44 @@
                 }
             }
 
+            // Generate random word or joke
+            const randomWordOrJoke = getRandomWordOrJoke();
+            const div = document.createElement("div");
+            div.className = randomWordOrJoke.type;
+            div.textContent = randomWordOrJoke.text;
+            jokesContainer.appendChild(div);
+
             // Wait for a delay before restarting the animation
             setTimeout(updateForestAnimation, 8000);
         }
 
-        // Call the generateTrees function immediately and every 3 seconds
-        setInterval(generateTrees, 3000);
-
         // Call the updateForestAnimation function initially
         updateForestAnimation();
+
+        // Call the generateTrees function every 3 seconds
+        setInterval(generateTrees, 3000);
+
+        // Helper function to generate a random letter
+        function getRandomLetter() {
+            return String.fromCharCode(65 + Math.floor(Math.random() * 26));
+        }
+
+        // Helper function to generate a random word or joke
+        function getRandomWordOrJoke() {
+            const options = [
+                { type: "word", text: "Sunshine" },
+                { type: "word", text: "Rainbow" },
+                { type: "light-joke", text: "Why don't skeletons fight each other? They don't have the guts." },
+                { type: "light-joke", text: "Why did the scarecrow win an award? Because he was outstanding in his field." },
+                { type: "dark-joke", text: "Why was the math book sad? Because it had too many problems." },
+                { type: "dark-joke", text: "Why did the tomato turn red? Because it saw the salad dressing!" }
+            ];
+
+            const randomIndex = Math.floor(Math.random() * options.length);
+            return options[randomIndex];
+        }
     </script>
 
     <script src="static/scripts/index.js"></script>
 </body>
-</html>
+</html>  
