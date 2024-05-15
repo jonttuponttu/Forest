@@ -128,21 +128,14 @@
             justify-content: center;
             align-items: center;
         }
-        .road-segment {
-            width: 90%;
-            height: 50px;
-            background-color: #444;
-            margin: 5px 0;
-            position: relative;
+        .message-box {
+            width: 200px;
+            height: 100px;
+            border: 1px solid #fff;
             display: flex;
-            justify-content: space-around;
-        }
-        .rock {
-            width: 10px;
-            height: 10px;
-            background-color: #888;
-            border-radius: 50%;
-            position: absolute;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -178,7 +171,8 @@
 
     <!-- Game container (hidden initially) -->
     <div id="game-container" style="display: none;">
-        <!-- Road segments will be added here -->
+        <!-- Message box for actions -->
+        <div class="message-box" id="action-message-box"></div>
     </div>
 
     <!-- Movement buttons -->
@@ -200,10 +194,13 @@
             const closeBtn = document.querySelector('.close');
             const moveButton = document.getElementById('move-button');
             const forwardButton = document.getElementById('forward-button');
+            const turnLeftButton = document.getElementById('turn-left-button');
+            const turnRightButton = document.getElementById('turn-right-button');
             const movementOptions = document.getElementById('movement-options');
             const loadingProgress = document.getElementById('loading-progress');
             const loadingMessage = document.getElementById('loading-message');
             const gameContainer = document.getElementById('game-container');
+            const actionMessageBox = document.getElementById('action-message-box');
 
             // Simulate loading progress and random messages
             let progress = 0;
@@ -229,7 +226,6 @@
                     clearInterval(loadingInterval);
                     document.getElementById('loading').style.display = 'none';
                     gameContainer.style.display = 'block';
-                    generateInitialRoad();
                 }
             }, 100);
 
@@ -248,46 +244,45 @@
                 movementOptions.style.display = 'flex';
             });
 
-            // Hide movement options when one is selected
+            // Hide movement options when one is selected and show loading animation
             document.querySelectorAll('#movement-options button').forEach(button => {
                 button.addEventListener('click', () => {
                     movementOptions.style.display = 'none';
+                    showLoadingAnimation(button.id);
                 });
             });
 
-            // Generate initial road segments
-            function generateInitialRoad() {
-                for (let i = 0; i < 7; i++) {
-                    const roadSegment = createRoadSegment();
-                    gameContainer.appendChild(roadSegment);
+            function showLoadingAnimation(action) {
+                let actionMessage;
+                if (action === 'forward-button') {
+                    actionMessage = 'Moving forward';
+                } else if (action === 'turn-left-button') {
+                    actionMessage = 'Turning Left';
+                } else if (action === 'turn-right-button') {
+                    actionMessage = 'Turning Right';
                 }
-            }
 
-            // Create a road segment with random rocks
-            function createRoadSegment() {
-                const roadSegment = document.createElement('div');
-                roadSegment.classList.add('road-segment');
+                const wasInventoryOpen = inventoryModal.style.display === 'block';
+                if (wasInventoryOpen) {
+                    inventoryModal.style.display = 'none';
+                }
 
-                // Randomly generate rocks
-                for (let i = 0; i < 3; i++) {
-                    if (Math.random() < 0.5) {
-                        const rock = document.createElement('div');
-                        rock.classList.add('rock');
-                        rock.style.left = `${Math.random() * 80 + 10}%`;
-                        rock.style.top = `${Math.random() * 80 + 10}%`;
-                        roadSegment.appendChild(rock);
+                actionMessageBox.style.display = 'flex';
+                let dots = 0;
+                const dotInterval = setInterval(() => {
+                    dots = (dots + 1) % 4;
+                    actionMessageBox.textContent = `${actionMessage}${'.'.repeat(dots)}`;
+                }, 500);
+
+                setTimeout(() => {
+                    clearInterval(dotInterval);
+                    actionMessageBox.style.display = 'none';
+                    if (wasInventoryOpen) {
+                        inventoryModal.style.display = 'block';
                     }
-                }
-                return roadSegment;
+                }, 5000);
             }
-
-            // Move forward action
-            forwardButton.addEventListener('click', () => {
-                const firstSegment = gameContainer.firstElementChild;
-                gameContainer.removeChild(firstSegment);
-                const newSegment = createRoadSegment();
-                gameContainer.appendChild(newSegment);
-            });
         });
     </script>
 </body>
+</html>
