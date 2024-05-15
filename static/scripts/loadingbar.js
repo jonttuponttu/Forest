@@ -6,7 +6,10 @@ class LoadingBar {
         this.messages = [
             'Building Terrain',
             'Generating Rocks',
-            'Loading Assets'
+            'Loading Assets',
+            'Generating Mobs',
+            'Growing Trees',
+            'Enabling GOD'
         ];
         this.durations = [3000, 7000, 5000]; // durations in milliseconds
         this.loadingProgress = loadingProgress;
