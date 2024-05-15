@@ -11,6 +11,10 @@
             padding: 0;
             background-color: #000;
             color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100vh;
         }
         #loading {
             position: fixed;
@@ -38,6 +42,7 @@
             background-color: #222;
             max-width: 300px;
             display: none;
+            z-index: 9998; /* Ensure inventory appears above loading screen */
         }
         #inventory h2 {
             margin-top: 0;
@@ -47,6 +52,47 @@
         .item {
             margin-bottom: 5px;
             font-size: 16px;
+            cursor: pointer;
+        }
+        #movement-buttons {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .movement-button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 18px;
+            background-color: #333;
+            border: 2px solid #fff;
+            border-radius: 5px;
+            color: #fff;
+            cursor: pointer;
+        }
+        #movement-options {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333;
+            border: 2px solid #fff;
+            border-radius: 5px;
+            z-index: 9999;
+        }
+        #movement-options button {
+            display: block;
+            width: 100%;
+            padding: 10px 0;
+            font-size: 16px;
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid #fff;
+            color: #fff;
+            cursor: pointer;
+        }
+        #movement-options button:last-child {
+            border: none;
         }
     </style>
 </head>
@@ -67,6 +113,18 @@
     <!-- Game container (hidden initially) -->
     <div id="game-container" style="display: none;">
         <!-- Game content will be displayed here -->
+    </div>
+
+    <!-- Movement buttons -->
+    <div id="movement-buttons">
+        <button class="movement-button" id="movement-button">Move</button>
+    </div>
+
+    <!-- Movement options -->
+    <div id="movement-options">
+        <button id="forward-button">Forward</button>
+        <button id="turn-left-button">Turn Left</button>
+        <button id="turn-right-button">Turn Right</button>
     </div>
 
     <script>
@@ -92,10 +150,15 @@
         function updateInventory() {
             let itemsContainer = document.getElementById('items');
             itemsContainer.innerHTML = '';
-            inventory.forEach(item => {
+            inventory.forEach((item, index) => {
                 let itemElement = document.createElement('div');
                 itemElement.classList.add('item');
                 itemElement.textContent = `${item.name} (${item.quantity}) - ${item.description}`;
+                // Add click event listener to each item
+                itemElement.addEventListener('click', () => {
+                    // Example: Show an alert with item information
+                    alert(`You examine the ${item.name}: ${item.description}`);
+                });
                 itemsContainer.appendChild(itemElement);
             });
         }
@@ -117,8 +180,38 @@
                 document.getElementById('loading-text').textContent = `Starting game ${loadingProgress}%`;
             }
         }, 50); // Adjust the interval duration (in milliseconds) for smoother or faster animation
+
+        // Movement button event listener
+        document.getElementById('movement-button').addEventListener('click', () => {
+            // Display movement options when the button is clicked
+            document.getElementById('movement-options').style.display = 'block';
+        });
+
+        // Movement option event listeners
+        document.getElementById('forward-button').addEventListener('click', () => {
+            // Implement movement logic for moving forward
+            console.log('Move forward');
+            // Hide movement options after selecting an option
+            document.getElementById('movement-options').style.display = 'none';
+        });
+
+        document.getElementById('turn-left-button').addEventListener('click', () => {
+            // Implement movement logic for turning left
+            console.log('Turn left');
+            // Hide movement options after selecting an option
+            document.getElementById('movement-options').style.display = 'none';
+        });
+
+        document.getElementById('turn-right-button').addEventListener('click', () => {
+            // Implement movement logic for turning right
+            console.log('Turn right');
+            // Hide movement options after selecting an option
+            document.getElementById.getElementById('movement-options').style.display = 'none';
+        });
     </script>
 </body>
 </html>
+
+
 
 
