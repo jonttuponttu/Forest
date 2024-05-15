@@ -1,4 +1,3 @@
-import { LoadingBar } from './loadingbar.js';
 import { randomEncounter } from './encounters.js';
 
 document.addEventListener('DOMContentLoaded', (event) => {
@@ -9,26 +8,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const forwardButton = document.getElementById('forward-button');
     const turnLeftButton = document.getElementById('turn-left-button');
     const turnRightButton = document.getElementById('turn-right-button');
-    const movementOptions = document.getElementById('movement-options');
-    const loadingProgress = document.getElementById('loading-progress');
-    const loadingMessage = document.getElementById('loading-message');
-    const gameContainer = document.getElementById('game-container');
-    const actionMessageBox = document.getElementById('action-message-box');
-
-    const loadingBar = new LoadingBar(loadingProgress, loadingMessage);
-    loadingBar.start();
-
-    // Show inventory modal
-    inventoryButton.addEventListener('click', () => {
-        inventoryModal.style.display = 'block';
-    });
-
-    // Close inventory modal
-    closeBtn.addEventListener('click', () => {
-        inventoryModal.style.display = 'none';
-    });
-
-    // Show movement options
+    
+        // Show movement options
     moveButton.addEventListener('click', () => {
         movementOptions.style.display = 'flex';
     });
