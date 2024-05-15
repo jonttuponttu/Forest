@@ -62,7 +62,9 @@ class LoadingBar {
                 // If the entire sequence has been typed, skip the loading scene
                 if (this.skipIndex === this.skipSequence.length) {
                     clearInterval(loadingInterval);
-                    window.location.href = 'game.html?cheated=true'; // Modify this line
+                    localStorage.setItem('cheated', 'true'); // Store the cheat status in the local storage
+                    localStorage.setItem('cheats', '1');
+                    window.location.href = 'game.html';
                 }
             } else {
                 this.skipIndex = 0;
