@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encounter with Priest</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        #priest {
+            font-family: monospace;
+            font-size: 24px;
+        }
+
+        #leave-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #ff0000;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div id="priest">
+        <pre>
+  _______
+ /       \
+|         |
+|   __    |
+|  /  \   |
+|  \__/   |
+ \_______/
+ |  | |  |
+ |__|_|__|
+        </pre>
+    </div>
+
+    <button id="leave-button" onclick="leave()">Leave</button>
+
+    <script>
+        function leave() {
+            window.location.href = "game.html";
+        }
+    </script>
+</body>
+</html>
