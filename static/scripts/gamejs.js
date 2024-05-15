@@ -14,11 +14,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     // Simulate loading progress and random messages
     let startTime = Date.now();
-    const duration = 5000; // Total duration of the loading animation in milliseconds
+    let currentMessageIndex = 0;
+    const duration = 5000; // Total duration of each message display in milliseconds
     const messages = [
-        'Building Terrain 1-100%',
-        'Generating Rocks 1-100%',
-        'Loading Assets 1-100%'
+        'Building Terrain',
+        'Generating Rocks',
+        'Loading Assets'
     ];
     
     function getRandomMessage() {
@@ -28,19 +29,29 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const loadingInterval = setInterval(() => {
         const elapsed = Date.now() - startTime;
         const progress = Math.min(100, (elapsed / duration) * 100); // Calculate progress based on time elapsed
+        const message = messages[currentMessageIndex];
     
         loadingProgress.style.width = progress + '%';
+    
+        if (progress < 100) {
+            loadingMessage.textContent = `${message} ${Math.floor(progress)}%`;
+        } else {
+            // Switch to the next message when the progress reaches 100%
+            currentMessageIndex = (currentMessageIndex + 1) % messages.length;
+            startTime = Date.now(); // Reset start time for the next message
+        }
     
         if (progress % 3 === 0) {
             loadingMessage.textContent = getRandomMessage();
         }
     
-        if (progress >= 100) {
+        if (currentMessageIndex === messages.length && progress >= 100) {
             clearInterval(loadingInterval);
             document.getElementById('loading').style.display = 'none';
             gameContainer.style.display = 'block';
         }
     }, 100);
+
 
     // Show inventory modal
     inventoryButton.addEventListener('click', () => {
