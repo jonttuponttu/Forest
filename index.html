@@ -102,8 +102,24 @@
             }
         }
 
+        function getRandomWordOrJoke() {
+            const words = ["sun", "moon", "stars", "sky", "forest", "river", "bird", "cloud", "mountain", "ocean"];
+            const lightJokes = ["Why did the scarecrow win an award? Because he was outstanding in his field.", "Why don't skeletons fight each other? They don't have the guts.", "Did you hear about the cheese factory that exploded? There was nothing left but de-brie."];
+            const darkJokes = ["Why was the math book sad? Because it had too many problems.", "Why don't scientists trust atoms? Because they make up everything.", "I told my wife she was drawing her eyebrows too high. She looked surprised."];
+            const randomNum = Math.random();
+            if (randomNum < 0.3) {
+                return words[Math.floor(Math.random() * words.length)];
+            } else if (randomNum < 0.6) {
+                return lightJokes[Math.floor(Math.random() * lightJokes.length)];
+            } else {
+                return darkJokes[Math.floor(Math.random() * darkJokes.length)];
+            }
+        }
+
         // Function to update the forest animation
         function updateForestAnimation() {
+            const forestAnimation = document.getElementById("forest-animation");
+            const forestText = "[Forestfunction updateForestAnimation() {
             const forestAnimation = document.getElementById("forest-animation");
             const forestText = "[Forest]";
             let animatedText = "";
@@ -117,26 +133,35 @@
                     // Delete old letters one by one only if inside the brackets
                     if (addingLetters) {
                         setTimeout(() => {
-                            animatedText = animatedText.substring(0, animatedText.length - 1) + forestText[i];
+                            animatedText = animatedText.substring(0, animatedText.length - 1);
                             forestAnimation.textContent = animatedText;
                         }, deleteTimeout);
                         deleteTimeout += 2000;
                     }
                     // Start adding new letters after deleting all old letters inside brackets
-                    if (forestText[i] === '[') {
+                    if (animatedText === '[') {
                         addingLetters = true;
+                    }
+                    // Add new letters one by one after deleting old letters inside brackets
+                    if (addingLetters) {
+                        setTimeout(() => {
+                            animatedText += getRandomWordOrJoke();
+                            forestAnimation.textContent = animatedText;
+                        }, deleteTimeout);
+                        deleteTimeout += 2000;
                     }
                 }
             }
+
+            // Wait for a delay before restarting the animation
+            setTimeout(updateForestAnimation, 8000);
         }
 
         // Call the generateTrees function immediately and every 3 seconds
         setInterval(generateTrees, 3000);
 
-        // Call the updateForestAnimation function initially and every 8 seconds
-        setInterval(updateForestAnimation, 8000);
-        updateForestAnimation(); // Initial call
-
+        // Call the updateForestAnimation function initially
+        updateForestAnimation();
     </script>
 
     <script src="static/scripts/index.js"></script>
