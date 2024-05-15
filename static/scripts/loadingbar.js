@@ -17,6 +17,11 @@ class LoadingBar {
         this.skipButton = skipButton;
         this.skipSequence = ['s', 'k', 'i', 'p'];
         this.skipIndex = 0;
+
+        // Set cheats to 0 by default
+        if (!localStorage.getItem('cheats')) {
+            localStorage.setItem('cheats', '0');
+        }
     }
 
     getRandomDuration() {
@@ -77,7 +82,6 @@ class LoadingBar {
 window.addEventListener('DOMContentLoaded', () => {
     const loadingProgress = document.querySelector('#loading-progress');
     const loadingMessage = document.querySelector('#loading-message');
-    const skipButton = document.querySelector('#skip-button'); // Add this line
-    const loadingBar = new LoadingBar(loadingProgress, loadingMessage, skipButton); // Modify this line
+    const loadingBar = new LoadingBar(loadingProgress, loadingMessage); // Modify this line
     loadingBar.start();
 });
