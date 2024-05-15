@@ -1,43 +1,48 @@
-let startTime = Date.now();
-let currentMessageIndex = 0;
-let progress = 0;
-const messages = [
-    'Building Terrain',
-    'Generating Rocks',
-    'Loading Assets'
-];
+export class LoadingBar {
+    constructor(loadingProgress, loadingMessage) {
+        this.startTime = Date.now();
+        this.currentMessageIndex = 0;
+        this.progress = 0;
+        this.messages = [
+            'Building Terrain',
+            'Generating Rocks',
+            'Loading Assets'
+        ];
+        this.durations = [3000, 7000, 5000]; // durations in milliseconds
+        this.loadingProgress = loadingProgress;
+        this.loadingMessage = loadingMessage;
+    }
 
-// Define durations for each message
-const durations = [3000, 7000, 5000]; // durations in milliseconds
+    getRandomMessage() {
+        return this.messages[Math.floor(Math.random() * this.messages.length)];
+    }
 
-function getRandomMessage() {
-    return messages[Math.floor(Math.random() * messages.length)];
-}
+    start() {
+        const loadingInterval = setInterval(() => {
+            const elapsed = Date.now() - this.startTime;
 
-export function startLoadingBar(loadingProgress, loadingMessage) {
-    const loadingInterval = setInterval(() => {
-        const elapsed = Date.now() - startTime;
+            // Calculate progress based on time elapsed
+            this.progress = Math.min(100, (elapsed / this.durations[this.currentMessageIndex]) * 100);
 
-        // Calculate progress based on time elapsed
-        progress = Math.min(100, (elapsed / durations[currentMessageIndex]) * 100);
+            this.loadingProgress.style.width = this.progress + '%';
 
-        loadingProgress.style.width = progress + '%';
+            // Display the current message with the calculated progress
+            this.loadingMessage.textContent = `${this.messages[this.currentMessageIndex]} ${Math.floor(this.progress)}%`;
 
-        // Display the current message with the calculated progress
-        loadingMessage.textContent = `${messages[currentMessageIndex]} ${Math.floor(progress)}%`;
+            if (this.progress >= 100) {
+                // If progress reaches 100%, move to the next message
+                this.currentMessageIndex++;
 
-        if (progress >= 100) {
-            // If progress reaches 100%, move to the next message
-            currentMessageIndex++;
-
-            // If all messages have been displayed, stop the loading animation
-            if (currentMessageIndex >= messages.length) {
-                clearInterval(loadingInterval);
-            } else {
-                // Reset start time for the next message
-                startTime = Date.now();
-                progress = 0;
+                // If all messages have been displayed, stop the loading animation and redirect to game.html
+                if (this.currentMessageIndex >= this.messages.length) {
+                    clearInterval(loadingInterval);
+                    window.location.href = 'game.html';
+                } else {
+                    // Reset start time for the next message
+                    this.startTime = Date.now();
+                    this.progress = 0;
+                }
             }
-        }
-    }, 100);
+        }, 100);
+    }
 }
