@@ -39,12 +39,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
         showLoadingAnimation('turn-right-button');
     });
 
-    window.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape') {
-            // Open pause menu
-            window.location.href = "pausemenu.html";
-        }
+    const pauseButton = document.getElementById('pause-button');
+
+    // Open pause menu
+    pauseButton.addEventListener('click', () => {
+        window.location.href = "pausemenu.html";
     });
+
 
     function showLoadingAnimation(action) {
         let actionMessage;
