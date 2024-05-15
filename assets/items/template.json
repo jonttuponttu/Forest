@@ -1,9 +1,7 @@
 {
-	[
-	"id": "item",
-	"display_name": "item"
-	"damage": "value",
-	"durability": "value",
-	"enchantments": "{}"
-	]
+    "id": "item_id",
+    "display_name": "item",
+    "damage": "value",
+    "durability": "value",
+    "enchantments": {}
 }
