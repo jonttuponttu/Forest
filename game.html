@@ -8,6 +8,11 @@
     <script src="static/scripts/gamejs.js"></script>
     <script src="static/scripts/cheater.js"></script>
     <style>
+        body {
+            background-color: #222;
+            color: white;
+        }
+
         #game-container {
             position: relative;
             width: 100%;
@@ -52,7 +57,7 @@
             display: none;
             position: fixed;
             top: 50%;
-            left: 50%;
+            left:50%;
             transform: translate(-50%, -50%);
             background-color: rgba(255, 255, 255, 0.9);
             padding: 20px;
@@ -140,7 +145,7 @@
                 isFirstMove = false;
             } else {
                 if (forwardButton.innerHTML === "Move Forward") {
-                    notificationBox.innerHTML = "Leaving Forest...";
+                    notificationBox.innerHTML = "Moving forward in Forest...";
                     notificationBox.style.display = "block";
                     treesContainer.style.display = "none";
                     setTimeout(function() {
@@ -152,7 +157,6 @@
                 } else {
                     notificationBox.innerHTML = "Moving forward...";
                     notificationBox.style.display = "block";
-                    treesnotificationBox.style.display = "block";
                     treesContainer.style.display = "none";
                     setTimeout(function() {
                         notificationBox.style.display = "none";
@@ -184,13 +188,18 @@
         }
 
         function generateTrees() {
-            // Generate ASCII trees in the designated box
-            // Your code for generating trees goes here
+            var treesContainer = document.getElementById("trees-container");
+            treesContainer.innerHTML = ""; // Clear previous trees
+            var trees = ""; // Simulated trees
+            for (var i = 0; i < 5; i++) {
+                trees += "Tree" + (i + 1) + "<br>";
+            }
+            treesContainer.innerHTML = trees;
         }
 
         function clearTrees() {
-            // Clear trees from the designated box
-            // Your code for clearing trees goes here
+            var treesContainer = document.getElementById("trees-container");
+            treesContainer.innerHTML = "";
         }
 
         function moveForward() {
