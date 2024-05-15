@@ -4,9 +4,121 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Text-Based Horror Game - Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            color: #fff;
+        }
+        #loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        #loading-text {
+            font-size: 24px;
+            color: #fff;
+        }
+        #inventory {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            background-color: #222;
+            max-width: 300px;
+            display: none;
+        }
+        #inventory h2 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+        .item {
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to the Text-Based Horror Game!</h1>
-    <p>The game is starting...</p>
+    <!-- Loading animation -->
+    <div id="loading">
+        <div id="loading-text">Starting game 0%</div>
+    </div>
+
+    <!-- Inventory container -->
+    <div id="inventory">
+        <h2>Inventory</h2>
+        <div id="items">
+            <!-- Inventory items will be displayed here -->
+        </div>
+    </div>
+
+    <!-- Game container (hidden initially) -->
+    <div id="game-container" style="display: none;">
+        <!-- Game content will be displayed here -->
+    </div>
+
+    <script>
+        // Define the inventory array to store items
+        let inventory = [];
+
+        // Function to add an item to the inventory
+        function addItem(name, description, quantity = 1) {
+            // Check if the item already exists in the inventory
+            let existingItemIndex = inventory.findIndex(item => item.name === name);
+            if (existingItemIndex !== -1) {
+                // If the item exists, increase its quantity
+                inventory[existingItemIndex].quantity += quantity;
+            } else {
+                // If the item doesn't exist, add it to the inventory
+                inventory.push({ name, description, quantity });
+            }
+            // Update the inventory display
+            updateInventory();
+        }
+
+        // Function to update the inventory display
+        function updateInventory() {
+            let itemsContainer = document.getElementById('items');
+            itemsContainer.innerHTML = '';
+            inventory.forEach(item => {
+                let itemElement = document.createElement('div');
+                itemElement.classList.add('item');
+                itemElement.textContent = `${item.name} (${item.quantity}) - ${item.description}`;
+                itemsContainer.appendChild(itemElement);
+            });
+        }
+
+        // Simulate loading process from 0% to 100%
+        let loadingProgress = 0;
+        let loadingInterval = setInterval(() => {
+            loadingProgress++;
+            if (loadingProgress > 100) {
+                // Stop the loading animation when it reaches 100%
+                clearInterval(loadingInterval);
+                // Hide the loading screen and show the game content
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('game-container').style.display = 'block';
+                // Display the inventory
+                document.getElementById('inventory').style.display = 'block';
+            } else {
+                // Update the loading text with the current progress
+                document.getElementById('loading-text').textContent = `Starting game ${loadingProgress}%`;
+            }
+        }, 50); // Adjust the interval duration (in milliseconds) for smoother or faster animation
+    </script>
 </body>
 </html>
+
+
