@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House and Road</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        .art {
+            white-space: pre;
+            font-family: monospace;
+            text-align: center;
+        }
+        .interaction {
+            text-align: center;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="art">
+          /\
+         /  \
+        /    \
+       /______\
+      |        |
+      |        |
+______|________|______
+\                    /
+ \                  /
+  \                /
+   \_______/\_____/
+           ||
+           ||
+           ||  <- Road
+           ||
+          /  \
+        /      \
+      /__________\
+    /|__________|\
+
+        /\  /\  /\ 
+       /  \/  \/  \
+      /    /\  /\  \
+     /    /  \/  \  \
+    /____/        \__\
+
+</div>
+
+<div class="interaction">
+    <button onclick="enterHouse()">Enter House</button>
+    <button onclick="continueMoving()">Continue Moving</button>
+</div>
+
+<script>
+    function enterHouse() {
+        window.location.href = 'house.html'; // Redirect to house.html
+    }
+
+    function continueMoving() {
+        window.location.href = 'game.html'; // Redirect to game.html
+    }
+</script>
+
+</body>
+</html>
