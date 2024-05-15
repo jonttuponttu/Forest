@@ -39,6 +39,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
         showLoadingAnimation('turn-right-button');
     });
 
+    window.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            // Open pause menu
+            window.location.href = "pausemenu.html";
+        }
+    });
+
     function showLoadingAnimation(action) {
         let actionMessage;
         if (action === 'forward-button') {
