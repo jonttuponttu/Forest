@@ -8,8 +8,23 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const forwardButton = document.getElementById('forward-button');
     const turnLeftButton = document.getElementById('turn-left-button');
     const turnRightButton = document.getElementById('turn-right-button');
-    
-        // Show movement options
+    const movementOptions = document.getElementById('movement-options');
+    const loadingProgress = document.getElementById('loading-progress');
+    const loadingMessage = document.getElementById('loading-message');
+    const gameContainer = document.getElementById('game-container');
+    const actionMessageBox = document.getElementById('action-message-box');
+
+    // Show inventory modal
+    inventoryButton.addEventListener('click', () => {
+        inventoryModal.style.display = 'block';
+    });
+
+    // Close inventory modal
+    closeBtn.addEventListener('click', () => {
+        inventoryModal.style.display = 'none';
+    });
+
+    // Show movement options
     moveButton.addEventListener('click', () => {
         movementOptions.style.display = 'flex';
     });
