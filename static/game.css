@@ -172,3 +172,20 @@ body {
     align-items: center;
     margin-top: 20px;
 }
+
+
+/* Pause Menu Button Styles */
+#pause-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#pause-menu button {
+    padding: 10px 20px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
