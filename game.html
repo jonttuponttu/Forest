@@ -6,12 +6,92 @@
     <title>Text-Based Horror Game - Game</title>
     <link rel="stylesheet" href="static/game.css">
     <script src="static/scripts/gamejs.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #fff;
+        }
+        #loading-progress {
+            width: 100px;
+            height: 10px;
+            background-color: #fff;
+            margin-bottom: 10px;
+        }
+        #loading-text {
+            margin-top: 10px;
+        }
+        #inventory-button {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 10px 20px;
+            background-color: #ff0000;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #inventory-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+        .modal-content {
+            position: relative;
+        }
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            font-size: 20px;
+        }
+        #movement-buttons {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+        .movement-button, #forward-button, #turn-left-button, #turn-right-button {
+            padding: 10px 20px;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #movement-options {
+            display: none;
+            position: fixed;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+    </style>
 </head>
 <body>
     <!-- Loading animation -->
     <div id="loading">
         <div id="loading-progress"></div>
-        <div id="loading-text"></div>
+        <div id="loading-text">Loading...</div>
     </div>
 
     <!-- Inventory button -->
@@ -37,14 +117,46 @@
 
     <!-- Movement buttons -->
     <div id="movement-buttons">
-        <button class="movement-button" id="movement-button">Move</button>
+        <button class="movement-button" id="move-button">Move</button>
     </div>
 
     <!-- Movement options -->
     <div id="movement-options">
-        <button id="forward-button">Forward</button>
+        <button id="forward-button">Move Forward</button>
         <button id="turn-left-button">Turn Left</button>
         <button id="turn-right-button">Turn Right</button>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const inventoryButton = document.getElementById('inventory-button');
+            const inventoryModal = document.getElementById('inventory-modal');
+            const closeBtn = document.querySelector('.close');
+            const moveButton = document.getElementById('move-button');
+            const movementOptions = document.getElementById('movement-options');
+
+            // Show inventory modal
+            inventoryButton.addEventListener('click', () => {
+                inventoryModal.style.display = 'block';
+            });
+
+            // Close inventory modal
+            closeBtn.addEventListener('click', () => {
+                inventoryModal.style.display = 'none';
+            });
+
+            // Show movement options
+            moveButton.addEventListener('click', () => {
+                movementOptions.style.display = 'flex';
+            });
+
+            // Hide movement options when one is selected
+            document.querySelectorAll('#movement-options button').forEach(button => {
+                button.addEventListener('click', () => {
+                    movementOptions.style.display = 'none';
+                });
+            });
+        });
+    </script>
 </body>
 </html>
