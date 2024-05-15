@@ -11,7 +11,7 @@ class LoadingBar {
             'Growing Trees',
             'Enabling GOD'
         ];
-        this.durations = [3000, 7000, 5000]; // durations in milliseconds
+        this.durations = [3000, 7000, 5000, 1000, 10000, 500]; // durations in milliseconds
         this.loadingProgress = loadingProgress;
         this.loadingMessage = loadingMessage;
     }
