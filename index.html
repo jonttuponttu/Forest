@@ -5,8 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ASCII Trees</title>
     <style>
+        body {
+            background-color: black;
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        #play-button {
+            background-color: red;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 50px;
+        }
+
         #trees-container {
             position: relative;
+            width: 100%;
+            height: calc(100vh - 100px); /* Adjusted to account for button height and margin */
         }
 
         .tree {
@@ -17,8 +37,9 @@
     </style>
 </head>
 <body>
-    <button id="play-button">Play</button>
-    <div id="trees-container"></div>
+    <div id="trees-container">
+        <button id="play-button" onclick="window.location.href='game.index'">Play</button>
+    </div>
 
     <script>
         function generateRandomTree() {
@@ -46,7 +67,6 @@
             const container = document.getElementById("trees-container");
             const button = document.getElementById("play-button");
             const buttonRect = button.getBoundingClientRect();
-            container.innerHTML = "";
 
             const numTrees = Math.floor(Math.random() * 5) + 1;
             for (let i = 0; i < numTrees; i++) {
