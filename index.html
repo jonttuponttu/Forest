@@ -42,10 +42,6 @@
             margin: 10px;
         }
 
-        #jokes-container {
-            margin-top: 20px;
-        }
-
         .word {
             color: yellow;
         }
@@ -56,6 +52,11 @@
 
         .dark-joke {
             color: red;
+        }
+
+        .random-text {
+            position: absolute;
+            color: white;
         }
     </style>
 </head>
@@ -142,28 +143,36 @@
         // Call the generateTrees function every 3 seconds
         setInterval(generateTrees, 3000);
 
-        // Helper function to generate a random letter
-        function getRandomLetter() {
-            return String.fromCharCode(65 + Math.floor(Math.random() * 26));
+        // Function to randomly generate and display text somewhere on the website
+        function displayRandomText() {
+            const randomText = getRandomWordOrJoke();
+            const textNode = document.createTextNode(randomText.text);
+            const randomElement = document.createElement('div');
+            randomElement.classList.add('random-text');
+            randomElement.appendChild(textNode);
+
+            const buttonRect = document.getElementById("play-button").getBoundingClientRect();
+
+            // Position the text randomly on the page, but not close to the play button
+            let left = Math.random() * document.body.offsetWidth;
+            let top = Math.random() * (document.body.offsetHeight - buttonRect.height);
+            while (left > buttonRect.left && left < buttonRect.right && top > buttonRect.top && top < buttonRect.bottom) {
+                left = Math.random() * document.body.offsetWidth;
+                top = Math.random() * (document.body.offsetHeight - buttonRect.height);
+            }
+
+            randomElement.style.left = `${left}px`;
+            randomElement.style.top = `${top}px`;
+
+            document.body.appendChild(randomElement);
         }
 
-        // Helper function to generate a random word or joke
-        function getRandomWordOrJoke() {
-            const options = [
-                { type: "word", text: "Sunshine" },
-                { type: "word", text: "Rainbow" },
-                { type: "light-joke", text: "Why don't skeletons fight each other? They don't have the guts." },
-                { type: "light-joke", text: "Why did the scarecrow win an award? Because he was outstanding in his field." },
-                { type: "dark-joke", text: "Why was the math book sad? Because it had too many problems." },
-                { type: "dark-joke", text: "Why did the tomato turn red? Because it saw the salad dressing!" }
-            ];
-
-            const randomIndex = Math.floor(Math.random() * options.length);
-            return options[randomIndex];
-        }
+        // Call the displayRandomText function every 8 seconds
+        setInterval(displayRandomText, 8000);
     </script>
 
     <script src="static/scripts/index.js"></script>
 </body>
 </html>
+
  
