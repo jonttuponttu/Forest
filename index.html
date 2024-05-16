@@ -11,10 +11,9 @@
             text-align: center;
             margin: 0;
             padding: 0;
-            position: relative;
         }
 
-        #play-button, #manual-button {
+        #play-button {
             background-color: red;
             color: white;
             padding: 10px 40px;
@@ -22,15 +21,6 @@
             border-radius: 5px;
             cursor: pointer;
             margin-top: 50px;
-            position: absolute;
-        }
-
-        #play-button {
-            left: 20px;
-        }
-
-        #manual-button {
-            right: 20px;
         }
 
         #forest-animation {
@@ -73,7 +63,6 @@
 <body>
     <div id="forest-animation">[Forest]</div>
     <button id="play-button">Play</button>
-    <button id="manual-button">Manual</button>
     <div id="jokes-container"></div>
     <div id="trees-container"></div>
 
@@ -162,16 +151,14 @@
             randomElement.classList.add('random-text');
             randomElement.appendChild(textNode);
 
-            const playButtonRect = document.getElementById("play-button").getBoundingClientRect();
-            const manualButtonRect = document.getElementById("manual-button").getBoundingClientRect();
+            const buttonRect = document.getElementById("play-button").getBoundingClientRect();
 
-            // Position the text randomly on the page, but not close to the buttons
+            // Position the text randomly on the page, but not close to the play button
             let left = Math.random() * document.body.offsetWidth;
-            let top = Math.random() * document.body.offsetHeight;
-            while ((left > playButtonRect.left && left < playButtonRect.right && top > playButtonRect.top && top < playButtonRect.bottom) ||
-                   (left > manualButtonRect.left && left < manualButtonRect.right && top > manualButtonRect.top && top < manualButtonRect.bottom)) {
+            let top = Math.random() * (document.body.offsetHeight - buttonRect.height);
+            while (left > buttonRect.left && left < buttonRect.right && top > buttonRect.top && top < buttonRect.bottom) {
                 left = Math.random() * document.body.offsetWidth;
-                top = Math.random() * document.body.offsetHeight;
+                top = Math.random() * (document.body.offsetHeight - buttonRect.height);
             }
 
             randomElement.style.left = `${left}px`;
@@ -182,22 +169,8 @@
 
         // Call the displayRandomText function every 8 seconds
         setInterval(displayRandomText, 8000);
-
-        // Add event listener to the Manual button for redirection
-        document.getElementById("manual-button").addEventListener("click", function() {
-            window.location.href = "manual.html";
-        });
-
-        // Add event listener to the Play button for redirection
-        document.getElementById("play-button").addEventListener("click", function() {
-            window.location.href = "loadingbar.html";
-        });
     </script>
 
     <script src="static/scripts/index.js"></script>
 </body>
 </html>
-
-
-
- 
