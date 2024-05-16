@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Light Mode Switcher</title>
+    <style>
+        body {
+            background-color: darkslategray;
+            color: white;
+        }
+
+        .light-mode body {
+            background-color: lightgray;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <label>
+        <input type="checkbox" name="myCheckbox">
+        Check me!
+    </label>
+    <button type="button" name="myButton">
+        Click me!
+    </button>
+    <input type="range" name="myInput" step="1" value="1" min="0" max="100" required>
+    <input type="submit" name="myInput" value="Submit">
+    <textarea name="myTextarea" placeholder="Your message here" cols="20" rows="10" minlength="10" maxlength="500" required></textarea>
+
+    <script>
+        document.querySelector('input[type="range"]').addEventListener('input', function() {
+            const rangeValue = this.value;
+            if (rangeValue < 50) {
+                document.body.classList.remove('light-mode');
+            } else {
+                document.body.classList.add('light-mode');
+            }
+        });
+    </script>
+</body>
+</html>
