@@ -132,52 +132,53 @@
             return options[randomIndex];
         }
 
-        function updateForestAnimation() {
-            const forestAnimation = document.getElementById("forest-animation");
-            const jokesContainer = document.getElementById("jokes-container");
-            const forestText = "[Forest]";
-            let animatedText =let animatedText = "";
-            let deleteTimeout = 0;
-            let addingLetters = false;
+       function updateForestAnimation() {
+    const forestAnimation = document.getElementById("forest-animation");
+    const jokesContainer = document.getElementById("jokes-container");
+    const forestText = "[Forest]";
+    let animatedText = ""; // Corrected declaration
+    let deleteTimeout = 0;
+    let addingLetters = false;
 
-            for (let i = 0; i < forestText.length; i++) {
-                if (forestText[i] === '[' || forestText[i] === ']') {
-                    animatedText += forestText[i];
-                } else {
-                    // Delete old letters one by one only if inside the brackets
-                    if (addingLetters) {
-                        setTimeout(() => {
-                            animatedText = animatedText.substring(0, animatedText.length - 1);
-                            forestAnimation.textContent = animatedText;
-                        }, deleteTimeout);
-                        deleteTimeout += 2000;
-                    }
-                    // Start adding new letters after deleting all old letters inside brackets
-                    if (animatedText === '[') {
-                        addingLetters = true;
-                    }
-                    // Add new letters one by one after deleting old letters inside brackets
-                    if (addingLetters) {
-                        setTimeout(() => {
-                            const newChar = getRandomLetter();
-                            animatedText += newChar;
-                            forestAnimation.textContent = animatedText;
-                        }, deleteTimeout);
-                        deleteTimeout += 2000;
-                    }
-                }
+    for (let i = 0; i < forestText.length; i++) {
+        if (forestText[i] === '[' || forestText[i] === ']') {
+            animatedText += forestText[i];
+        } else {
+            // Delete old letters one by one only if inside the brackets
+            if (addingLetters) {
+                setTimeout(() => {
+                    animatedText = animatedText.substring(0, animatedText.length - 1);
+                    forestAnimation.textContent = animatedText;
+                }, deleteTimeout);
+                deleteTimeout += 2000;
             }
-
-            // Generate random word or joke
-            const randomWordOrJoke = getRandomWordOrJoke();
-            const div = document.createElement("div");
-            div.className = randomWordOrJoke.type;
-            div.textContent = randomWordOrJoke.text;
-            jokesContainer.appendChild(div);
-
-            // Wait for a delay before restarting the animation
-            setTimeout(updateForestAnimation, 8000);
+            // Start adding new letters after deleting all old letters inside brackets
+            if (animatedText === '[') {
+                addingLetters = true;
+            }
+            // Add new letters one by one after deleting old letters inside brackets
+            if (addingLetters) {
+                setTimeout(() => {
+                    const newChar = getRandomLetter();
+                    animatedText += newChar;
+                    forestAnimation.textContent = animatedText;
+                }, deleteTimeout);
+                deleteTimeout += 2000;
+            }
         }
+    }
+
+    // Generate random word or joke
+    const randomWordOrJoke = getRandomWordOrJoke();
+    const div = document.createElement("div");
+    div.className = randomWordOrJoke.type;
+    div.textContent = randomWordOrJoke.text;
+    jokesContainer.appendChild(div);
+
+    // Wait for a delay before restarting the animation
+    setTimeout(updateForestAnimation, 8000);
+}
+
 
         // Call the updateForestAnimation function initially
         updateForestAnimation();
