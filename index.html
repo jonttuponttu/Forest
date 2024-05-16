@@ -25,8 +25,9 @@
 
         #forest-animation {
             font-family: monospace;
-            margin-top: 20px;
+            margin-top: -100px; /* Initial position above the viewport */
             font-size: 24px;
+            transition: margin-top 2s ease; /* Transition effect */
         }
 
         #trees-container {
@@ -132,56 +133,11 @@
             return options[randomIndex];
         }
 
-       function updateForestAnimation() {
-    const forestAnimation = document.getElementById("forest-animation");
-    const jokesContainer = document.getElementById("jokes-container");
-    const forestText = "[Forest]";
-    let animatedText = ""; // Corrected declaration
-    let deleteTimeout = 0;
-    let addingLetters = false;
-
-    for (let i = 0; i < forestText.length; i++) {
-        if (forestText[i] === '[' || forestText[i] === ']') {
-            animatedText += forestText[i];
-        } else {
-            // Delete old letters one by one only if inside the brackets
-            if (addingLetters) {
-                setTimeout(() => {
-                    animatedText = animatedText.substring(0, animatedText.length - 1);
-                    forestAnimation.textContent = animatedText;
-                }, deleteTimeout);
-                deleteTimeout += 2000;
-            }
-            // Start adding new letters after deleting all old letters inside brackets
-            if (animatedText === '[') {
-                addingLetters = true;
-            }
-            // Add new letters one by one after deleting old letters inside brackets
-            if (addingLetters) {
-                setTimeout(() => {
-                    const newChar = getRandomLetter();
-                    animatedText += newChar;
-                    forestAnimation.textContent = animatedText;
-                }, deleteTimeout);
-                deleteTimeout += 2000;
-            }
-        }
-    }
-
-    // Generate random word or joke
-    const randomWordOrJoke = getRandomWordOrJoke();
-    const div = document.createElement("div");
-    div.className = randomWordOrJoke.type;
-    div.textContent = randomWordOrJoke.text;
-    jokesContainer.appendChild(div);
-
-    // Wait for a delay before restarting the animation
-    setTimeout(updateForestAnimation, 8000);
-}
-
-
-        // Call the updateForestAnimation function initially
-        updateForestAnimation();
+        // Move forest animation to its place on load
+        window.onload = function() {
+            const forestAnimation = document.getElementById("forest-animation");
+            forestAnimation.style.marginTop = "20px"; // Adjusted position
+        };
 
         // Call the generateTrees function every 3 seconds
         setInterval(generateTrees, 3000);
@@ -209,4 +165,5 @@
 
     <script src="static/scripts/index.js"></script>
 </body>
-</html>  
+</html>
+ 
