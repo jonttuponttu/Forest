@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Text-Based Horror Game - Game</title>
     <link rel="stylesheet" href="static/game.css">
-    <script src="static/scripts/gamejs.js"></script>
-    <script src="static/scripts/cheater.js"></script>
+    <script src="static/scripts/gamejs.js" defer></script>
+    <script src="static/scripts/cheater.js" defer></script>
     <style>
         body {
             background-color: #222;
@@ -29,6 +29,7 @@
         }
 
         .dot-animation {
+            display: none; /* Initially hidden */
             animation: dot-blink 1s infinite alternate;
         }
 
@@ -85,8 +86,7 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgb(0,0,0);
-            background-color: rgba(0,0,0,0.4);
+            background-color: rgba(0, 0, 0, 0.4);
             padding-top: 60px;
         }
 
@@ -120,7 +120,7 @@
     <button id="inventory-button" onclick="openInventory()">Inventory</button>
 
     <!-- Inventory modal -->
-    <div id="inventory-modal" class="modal">
+    <div id="inventory-modal">
         <div id="inventory-modal-content">
             <span class="close" onclick="closeInventory()">×</span>
             <h2>Inventory</h2>
@@ -159,12 +159,12 @@
         <div id="trees-container">
             <div class="tree" style="top: 30%; left: 40%;">*</div>
             <div class="tree" style="top: 40%; left: 30%;">*</div>
-            <div class="tree" style="top:50%; left: 50%;">*</div>
+            <div class="tree" style="top: 50%; left: 50%;">*</div>
             <div class="tree" style="top: 60%; left: 40%;">*</div>
         </div>
 
         <!-- Encounter box -->
-        <div id="encounter-box">
+        <div id="encounter-box" style="display:none;">
             <p>Approach Priest?</p>
             <button onclick="approachPriest()">Yes</button>
             <button onclick="ignorePriest()">No</button>
@@ -253,6 +253,7 @@
                 movesLeft--;
                 if (movesLeft === 0) {
                     document.getElementById("priest").style.display = "block";
+                    document.getElementById("encounter-box").style.display = "block"; // Show encounter box
                 }
             }
         }
@@ -288,6 +289,11 @@
             var rolledNumber = Math.floor(Math.random() * 7) + 1;
             windButton.disabled = true;
             windButton.innerHTML = "Wind (Used)";
+            movePlayer(rolledNumber);function useWind() {
+            var windButton = document.getElementById("wind-button");
+            var rolledNumber = Math.floor(Math.random() * 7) + 1;
+            windButton.disabled = true;
+            windButton.innerHTML = "Wind (Used)";
             movePlayer(rolledNumber);
             if (rolledNumber < movesLeft) {
                 var distance = movesLeft - rolledNumber;
@@ -295,6 +301,9 @@
                 document.getElementById("priest").style.display = "block";
                 movePriest(distance);
             } else {
+                movesLeft = 0; // Set movesLeft to 0 as all moves are used up
+                document.getElementById("priest").style.display = "block";
+                document.getElementById("encounter-box").style.display = "block"; // Show encounter box
                 windButton.disabled = false;
                 windButton.innerHTML = "Wind";
             }
