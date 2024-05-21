@@ -1,9 +1,9 @@
-function keepHealthAtMax() {
-    playerHealth = maxHealth;
+function freezeHealth() {
+    Object.defineProperty(player, 'health', {
+        value: player.maxHealth,
+        writable: false,
+        configurable: true
+    });
 }
 
-function unlimitedHealth() {
-    setInterval(keepHealthAtMax, 100);
-}
-
-//This keeps player health at the max.
+//This freezes the players health.
