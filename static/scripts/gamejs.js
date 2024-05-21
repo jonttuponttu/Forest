@@ -1,5 +1,4 @@
 import { randomEncounter } from './encounters.js';
-import './commands/freezehealth.js';
 
 document.addEventListener('DOMContentLoaded', (event) => {
     const inventoryButton = document.getElementById('inventory-button');
