@@ -1,20 +1,21 @@
 var Game = {
     AddToInventory: function(item, amount) {
-        function addToLocalStorage(item, amount) {
+        // Split the item string into item type and item name
+        var itemParts = item.split(".");
+        var itemType = itemParts[0];
+        var itemName = itemParts[1];
+
+        function addToLocalStorage(itemType, itemName, amount) {
             // Get the current player data from local storage
             var player = JSON.parse(localStorage.getItem("player"));
 
             // Check if player data exists in local storage
             if (player) {
                 // Update the inventory for the specified item
-                if (item === "money") {
-                    player.money = (parseInt(player.money) + amount).toString();
+                if (player[itemType][itemName]) {
+                    player[itemType][itemName] = (parseInt(player[itemType][itemName]) + amount).toString();
                 } else {
-                    if (player.inventory[item]) {
-                        player.inventory[item] = (parseInt(player.inventory[item]) + amount).toString();
-                    } else {
-                        player.inventory[item] = amount.toString();
-                    }
+                    player[itemType][itemName] = amount.toString();
                 }
 
                 // Save the updated player data back to local storage
@@ -23,6 +24,6 @@ var Game = {
         }
 
         // Call the function to add the item to the inventory
-        addToLocalStorage(item, amount);
+        addToLocalStorage(itemType, itemName, amount);
     }
 };
