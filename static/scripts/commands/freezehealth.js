@@ -1,6 +1,6 @@
 function freezeHealth() {
     Object.defineProperty(player, 'health', {
-        value: player.maxHealth,
+        value: player.health,
         writable: false,
         configurable: true
     });
