@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="static/game.css">
     <script src="static/scripts/gamejs.js" defer></script>
     <script src="static/scripts/cheater.js" defer></script>
-    <script src="static/scripts/commands/gameCommands.js"></script>
-    <script src="static/scripts/commands/freezehealth.js"></script>
+    <script src="static/scripts/commands/gameCommands.js" defer></script>
+    <script src="static/scripts/commands/freezehealth.js" defer></script>
     <style>
         body {
             background-color: #222;
@@ -28,20 +28,6 @@
             transform: translate(-50%, -50%);
             display: none;
             z-index: 9999;
-        }
-
-        .dot-animation {
-            display: none; /* Initially hidden */
-            animation: dot-blink 1s infinite alternate;
-        }
-
-        @keyframes dot-blink {
-            0% {
-                opacity: 0;
-            }
-            100% {
-                opacity: 1;
-            }
         }
 
         #player {
@@ -140,14 +126,6 @@
 
     <!-- Game container -->
     <div id="game-container">
-        <!-- Text box for actions -->
-        <div class="message-box" id="action-message-box">
-            <p>Loading...</p>
-            <div class="dot-animation">.</div>
-            <div class="dot-animation">.</div>
-            <div class="dot-animation">.</div>
-        </div>
-
         <!-- Notification box -->
         <div id="notification-box"></div>
 
@@ -238,16 +216,6 @@
 
         function animateForward() {
             toggleTextAndTrees();
-            animateDots();
-        }
-
-        function animateDots() {
-            var dots = document.querySelectorAll(".dot-animation");
-            dots.forEach(function(dot, index) {
-                setTimeout(function() {
-                    dot.style.display = "inline";
-                }, index * 200);
-            });
         }
 
         function moveForward() {
@@ -291,11 +259,6 @@
             var rolledNumber = Math.floor(Math.random() * 7) + 1;
             windButton.disabled = true;
             windButton.innerHTML = "Wind (Used)";
-            movePlayer(rolledNumber);function useWind() {
-            var windButton = document.getElementById("wind-button");
-            var rolledNumber = Math.floor(Math.random() * 7) + 1;
-            windButton.disabled = true;
-            windButton.innerHTML = "Wind (Used)";
             movePlayer(rolledNumber);
             if (rolledNumber < movesLeft) {
                 var distance = movesLeft - rolledNumber;
@@ -313,7 +276,7 @@
 
         function movePlayer(steps) {
             // Implement player movement logic here
-            console.log("Player moved " + steps + " steps.");
+            console.log("Player moved"console.log("Player moved " + steps + " steps.");
         }
 
         function movePriest(steps) {
