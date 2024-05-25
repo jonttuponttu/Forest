@@ -31,10 +31,15 @@
         }
 
         /* Inventory styles */
-        #inventory-button {
+        #inventory-button, #map-button {
             position: absolute;
             top: 10px;
             left: 10px;
+            margin-right: 10px;
+        }
+
+        #map-button {
+            left: 90px;
         }
 
         #inventory-modal {
@@ -78,6 +83,9 @@
 
     <!-- Inventory button -->
     <button id="inventory-button" onclick="openInventory()">Inventory</button>
+    
+    <!-- Map button -->
+    <button id="map-button" onclick="location.href='world.html'">Map</button>
 
     <!-- Inventory modal -->
     <div id="inventory-modal">
