@@ -30,34 +30,6 @@
             z-index: 9999;
         }
 
-        #player {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: red;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            z-index: 9998;
-        }
-
-        #priest {
-            position: absolute;
-            background-color: blue;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            z-index: 9998;
-            display: none;
-        }
-
-        .tree {
-            position: absolute;
-            color: green;
-            z-index: 9997;
-        }
-
         /* Inventory styles */
         #inventory-button {
             position: absolute;
@@ -129,20 +101,6 @@
         <!-- Notification box -->
         <div id="notification-box"></div>
 
-        <!-- Player position indicator -->
-        <div id="player"></div>
-
-        <!-- Priest position indicator -->
-        <div id="priest"></div>
-
-        <!-- Trees container -->
-        <div id="trees-container">
-            <div class="tree" style="top: 30%; left: 40%;">*</div>
-            <div class="tree" style="top: 40%; left: 30%;">*</div>
-            <div class="tree" style="top: 50%; left: 50%;">*</div>
-            <div class="tree" style="top: 60%; left: 40%;">*</div>
-        </div>
-
         <!-- Encounter box -->
         <div id="encounter-box" style="display:none;">
             <p>Approach Priest?</p>
@@ -173,7 +131,6 @@
 
         function toggleTextAndTrees() {
             var notificationBox = document.getElementById("notification-box");
-            var treesContainer = document.getElementById("trees-container");
             var forwardButton = document.getElementById("forward-button");
 
             if (isFirstMove) {
@@ -181,36 +138,14 @@
                 notificationBox.style.display = "block";
                 setTimeout(function() {
                     notificationBox.style.display = "none";
-                    treesContainer.style.display = "block";
-                    document.getElementById("player").style.display = "block";
                 }, 5000);
                 isFirstMove = false;
             } else {
-                if (forwardButton.innerHTML === "Move Forward") {
-                    notificationBox.innerHTML = "Moving forward in Forest...";
-                    notificationBox.style.display = "block";
-                    treesContainer.style.display = "none";
-                    document.getElementById("player").style.display = "none";
-                    document.getElementById("priest").style.display = "none";
-                    setTimeout(function() {
-                        notificationBox.style.display = "none";
-                        forwardButton.innerHTML = "Move Forward";
-                        treesContainer.style.display = "block";
-                        document.getElementById("player").style.display = "block";
-                    }, 5000);
-                } else {
-                    notificationBox.innerHTML = "Moving forward...";
-                    notificationBox.style.display = "block";
-                    treesContainer.style.display = "none";
-                    document.getElementById("player").style.display = "none";
-                    document.getElementById("priest").style.display = "none";
-                    setTimeout(function() {
-                        notificationBox.style.display = "none";
-                        forwardButton.innerHTML = "Move Forward";
-                        treesContainer.style.display = "block";
-                        document.getElementById("player").style.display = "block";
-                    }, 5000);
-                }
+                notificationBox.innerHTML = "Moving forward...";
+                notificationBox.style.display = "block";
+                setTimeout(function() {
+                    notificationBox.style.display = "none";
+                }, 5000);
             }
         }
 
@@ -222,7 +157,6 @@
             if (movesLeft > 0) {
                 movesLeft--;
                 if (movesLeft === 0) {
-                    document.getElementById("priest").style.display = "block";
                     document.getElementById("encounter-box").style.display = "block"; // Show encounter box
                 }
             }
@@ -263,11 +197,9 @@
             if (rolledNumber < movesLeft) {
                 var distance = movesLeft - rolledNumber;
                 movesLeft = rolledNumber;
-                document.getElementById("priest").style.display = "block";
                 movePriest(distance);
             } else {
                 movesLeft = 0; // Set movesLeft to 0 as all moves are used up
-                document.getElementById("priest").style.display = "block";
                 document.getElementById("encounter-box").style.display = "block"; // Show encounter box
                 windButton.disabled = false;
                 windButton.innerHTML = "Wind";
@@ -276,7 +208,7 @@
 
         function movePlayer(steps) {
             // Implement player movement logic here
-            console.log("Player moved"console.log("Player moved " + steps + " steps.");
+            console.log("Player moved " + steps + " steps.");
         }
 
         function movePriest(steps) {
