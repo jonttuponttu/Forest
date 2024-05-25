@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clickable US Map</title>
+    <style>
+        body {
+            background-color: #2e2e2e;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        svg {
+            width: 80%;
+            height: auto;
+        }
+        .state {
+            fill: #ffffff;
+            cursor: pointer;
+        }
+        .state:hover {
+            fill: #ffcc00;
+        }
+    </style>
+</head>
+<body>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 959 593">
+        <title>Clickable US Map</title>
+        <g id="states">
+            <!-- Example states with simplified paths -->
+            <path class="state" id="California" d="M 100 200 L 150 200 L 150 250 L 100 250 Z" onclick="alert('California clicked!')" />
+            <path class="state" id="Texas" d="M 200 300 L 250 300 L 250 350 L 200 350 Z" onclick="alert('Texas clicked!')" />
+            <path class="state" id="Florida" d="M 300 400 L 350 400 L 350 450 L 300 450 Z" onclick="alert('Florida clicked!')" />
+            <path class="state" id="New York" d="M 400 100 L 450 100 L 450 150 L 400 150 Z" onclick="alert('New York clicked!')" />
+            <path class="state" id="Illinois" d="M 500 200 L 550 200 L 550 250 L 500 250 Z" onclick="alert('Illinois clicked!')" />
+        </g>
+    </svg>
+
+    <script>
+        // Additional JavaScript for interactivity can be added here
+    </script>
+</body>
+</html>
